@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Manual Rules</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Manual Rules</p>
+          <h1>Add manual feedbacks</h1>
+          <p class="lede">
+            Save a check name, classification, and feedback so the main review
+            page can reuse the same response continuously.
+          </p>
+        </div>
+      </header>
+
+      <main class="layout single-column">
+        <section class="panel input-panel">
+          <div class="inline-banner">
+            <div>
+              <p>Use the home page for switch health-check analysis</p>
+            </div>
+            <div class="examples-toolbar">
+              <a class="ghost-button link-button" href="./train.html">Training options</a>
+              <a class="ghost-button link-button" href="./index.html">Back to Health Check review</a>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>Check name</span>
+            <input
+              id="manualRuleCheckName"
+              type="text"
+              placeholder="For example: checkIntStats"
+            />
+          </label>
+
+          <label class="field">
+            <span>Classification</span>
+            <select id="manualRuleClassification">
+              <option value="minor">Minor</option>
+              <option value="major">Major</option>
+              <option value="show-stopper">Show stopper</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Feedback</span>
+            <textarea
+              id="manualRuleFeedback"
+              rows="8"
+              placeholder="Enter the feedback template to reuse whenever this check fails. You can use {{message}}, {{message_lines}}, {{check_name}}, {{hostname}}, {{interfaces}}, {{vrfs}}, or {{neighbor_ips}}."
+            ></textarea>
+          </label>
+          <div class="actions">
+            <button id="saveManualRuleButton" class="primary-button" type="button">
+              Save manual rule
+            </button>
+          </div>
+
+          <p id="manualRuleStatus" class="helper-text">
+            No manual rules saved yet.
+          </p>
+          <div class="field">
+            <span>Saved manual rules</span>
+            <div class="manual-rules-viewer">
+              <div class="manual-rules-column">
+                <label class="field compact-field">
+                  <span>Check names</span>
+                  <select id="manualRulesList" class="viewer-box" size="12"></select>
+                </label>
+                <div class="actions compact-actions">
+                  <button id="deleteManualRuleButton" class="ghost-button" type="button" disabled>
+                    Delete rule
+                  </button>
+                </div>
+              </div>
+
+              <label class="field compact-field">
+                <span>Classification and feedback</span>
+                <textarea
+                  id="manualRuleDetails"
+                  class="viewer-box"
+                  rows="12"
+                  readonly
+                  placeholder="Select a check name to view its classification and feedback."
+                ></textarea>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <span>Template keywords</span>
+            <div class="keyword-guide">
+              <p>
+                Use keywords in static feedback to pull variables from HC report's
+                message block in runtime
+              </p>
+              <p><code>{{message}}</code> First line from the message column.</p>
+              <p><code>{{first_message}}</code> Same as the first message line.</p>
+              <p><code>{{message_lines}}</code> All message-column lines shown line by line.</p>
+              <p><code>{{messages}}</code> Same as all message-column lines.</p>
+              <p><code>{{message_pipe}}</code> All message-column lines joined with <code>|</code>.</p>
+              <p><code>{{check_name}}</code> Current health-check name.</p>
+              <p><code>{{hostname}}</code> Switch hostname from the uploaded folder/report.</p>
+              <p><code>{{interfaces}}</code> Interfaces found in the message block.</p>
+              <p><code>{{compact_interfaces}}</code> Interfaces in compact range format like <code>Ethernet1/5-6</code>.</p>
+              <p><code>{{vrfs}}</code> VRF names found in the message block.</p>
+              <p><code>{{neighbor_ips}}</code> BGP neighbor IP addresses found in the message block.</p>
+              <p><code>{{description_lines}}</code> Lines from the description column for that check block.</p>
+              <p><code>{{command_hint}}</code> Command hint shown in the report for that check block.</p>
+              <p><code>{{module_ids}}</code> Module identifiers found in the message block.</p>
+              <p><code>{{utilization}}</code> Utilization value or percentage found in the message block.</p>
+              <p><code>{{class_maps}}</code> CoPP or class-map names found in the message block.</p>
+              <p><code>{{classification}}</code> Classification of the current manual rule.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./manual-rules.js"></script>
+  </body>
+</html>

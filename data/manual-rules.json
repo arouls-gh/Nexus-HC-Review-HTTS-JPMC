@@ -1,0 +1,23 @@
+{
+  "savedAt": "2026-04-12T17:40:23.167Z",
+  "rules": [
+    {
+      "checkName": "checkLacpTimer",
+      "classification": "minor",
+      "feedback": "Customer needs to check LACP timers is same as the LACP neighbour using show lacp interface` command.\n{{interfaces}}",
+      "savedAt": "2026-04-12T15:07:24.003Z"
+    },
+    {
+      "checkName": "checkSmuCSCvz65993",
+      "classification": "major",
+      "feedback": "SMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on boot. \nCheck if CSCvz65993 is committed by checking Kernel messages\n\nCustomer need to perform manual check:\nconfig ; feature bash ; end \nrun bash cat /mnt/pss/bootlogs/current/dmesg | grep CSCvz65993 \nconfig ; no feature bash ; end ; copy run start",
+      "savedAt": "2026-04-12T17:33:59.323Z"
+    },
+    {
+      "checkName": "checkSsdFirmware",
+      "classification": "major",
+      "feedback": "{{message_lines}} \n\nCustomer need to validate if switch is allowing to save the config. If yes no action needed. If not able to save the config, then please check with JPMC PE team for bug recommendations.",
+      "savedAt": "2026-04-12T17:40:23.166Z"
+    }
+  ]
+}

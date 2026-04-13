@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Train With Past Cases</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Training Workspace</p>
+          <h1>Teach the reviewer with past cases.</h1>
+          <p class="lede">
+            Upload previous device health-check outputs and the manual feedback
+            that was sent, then save them as a reusable training library on the
+            server.
+          </p>
+        </div>
+      </header>
+
+      <main class="layout single-column">
+        <section class="panel input-panel">
+          <div class="panel-heading">
+            <h2>Training data</h2>
+            <p>Save past examples so the Review Assistant can resue patterns of HTTS engineer</p>
+          </div>
+
+          <div class="inline-banner">
+            <div>
+              <p>Navigate to</p>
+            </div>
+            <div class="examples-toolbar">
+              <a class="ghost-button link-button" href="./train.html">Training options</a>
+              <a class="ghost-button link-button" href="./index.html">Back to review app</a>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>1. Device result text</span>
+            <textarea
+              id="trainingLogText"
+              rows="10"
+              placeholder="Paste the content of RESULTS/*_final_report.txt here."
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span>Or attach device result text file(s)</span>
+            <input
+              id="trainingLogs"
+              type="file"
+              accept=".txt,text/plain"
+              multiple
+            />
+            <p class="helper-text">
+              Upload prior <code>RESULTS/*_final_report.txt</code> files here.
+            </p>
+          </label>
+
+          <label class="field">
+            <span>2. Manual feedback text</span>
+            <textarea
+              id="trainingFeedbackText"
+              rows="10"
+              placeholder="Paste the manual feedback that was sent for the matching device result."
+            ></textarea>
+            <p class="helper-text">Note: mention each feedback item in bullet points (*).</p>
+          </label>
+
+          <label class="field">
+            <span>Or attach manual feedback text file(s)</span>
+            <input
+              id="trainingFeedback"
+              type="file"
+              accept=".txt,text/plain"
+              multiple
+            />
+          </label>
+
+          <label class="field">
+            <span>Optional notes about this training batch</span>
+            <textarea
+              id="trainingNotes"
+              rows="4"
+              placeholder="For example: Code upgrade cases from March, vPC-heavy environment, hardware replacement approvals, or special wording preferences."
+            ></textarea>
+          </label>
+
+          <div class="actions">
+            <button id="autoMapTrainingButton" class="primary-button" type="button">
+              Auto-map past cases
+            </button>
+            <button id="saveTrainingButton" class="primary-button" type="button">
+              Save mapped training examples
+            </button>
+          </div>
+
+          <p id="trainingStatus" class="helper-text">
+            No training library saved yet.
+          </p>
+
+          <p id="mappingSummary" class="helper-text">
+            Upload one or more report/feedback pairs, then run auto-map to review uncertain mappings only.
+          </p>
+
+          <section id="uncertainMappingPanel" class="field mapping-panel" hidden>
+            <span>Uncertain mappings</span>
+            <p class="helper-text">
+              Only uncertain feedback-to-check mappings are shown below. High-confidence matches will be saved automatically.
+            </p>
+            <div id="uncertainMappings" class="mapping-review-grid"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="./train.js"></script>
+  </body>
+</html>

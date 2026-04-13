@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Train Nexus Health Check Reviewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Training Workspace</p>
+          <h1>Choose how you want to train the review assistant.</h1>
+          <p class="lede">
+            Use past review pairs or add check-specific manual rules that the
+            main application can reuse continuously.
+          </p>
+        </div>
+      </header>
+
+      <main class="layout single-column">
+        <section class="panel input-panel">
+          <div class="panel-heading">
+            <h2>Training options</h2>
+            <p>Select one workflow to continue.</p>
+          </div>
+
+          <div class="training-choice-grid">
+            <article class="choice-card">
+              <h3>Train with past cases</h3>
+              <p>
+                Upload prior final_results.txt and matching manual feedback by
+                HTTS engineer so the app can generate similar responses when
+                there is no static matches for a given health check item
+              </p>
+              <a class="primary-button link-button" href="./past-cases.html">Train with past cases</a>
+            </article>
+
+            <article class="choice-card">
+              <h3>Add manual rules</h3>
+              <p>
+                Add static feedbacks for a given health check item which takes
+                precedence over auto-generated responses learned from past cases
+              </p>
+              <a class="primary-button link-button" href="./manual-rules.html">Add manual rules</a>
+            </article>
+          </div>
+
+          <div class="inline-banner">
+            <div>
+              <p>Use the home page for switch health-check analysis</p>
+            </div>
+            <a class="ghost-button link-button" href="./index.html">Back to Health Check review</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

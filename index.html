@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexus Health Check Reviewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Maintenance Review Assistant</p>
+          <h1>Nexus health check review for HTTS-JPMC-CELL</h1>
+          <p class="lede">
+            Upload the parent switch folder, containing the
+            <code>logs</code> and <code>results</code> sub-folder. Read the file
+            and identify Failed items, classify and assess whether it could
+            affect the planned maintenance activity, and export the feedback as
+            a text file.
+          </p>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel input-panel">
+          <label class="field">
+            <span>Upcoming activity</span>
+            <select id="activityType">
+              <option value="code-upgrade">Code upgrade</option>
+              <option value="smu-update">SMU Update</option>
+              <option value="hardware-replacement">Hardware replacement</option>
+              <option value="topology-change">Topology change</option>
+              <option value="switch-migration">Switch migration</option>
+              <option value="isolation-failover-testing">Isolation &amp; Failover testing</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Switch parent folder</span>
+            <input
+              id="healthFile"
+              type="file"
+              webkitdirectory
+              directory
+            />
+            <p class="helper-text">
+              Select the parent folder named after the switch hostname. It should
+              contain <code>LOGS</code> and <code>RESULTS</code> subfolders.
+            </p>
+          </label>
+
+          <div class="actions">
+            <button id="analyzeButton" class="primary-button" type="button">
+              Analyze health check
+            </button>
+          </div>
+          <p id="analysisStatus" class="helper-text">Awaiting analysis.</p>
+
+          <div class="inline-banner">
+            <div>
+              <strong>Train the review assistant</strong>
+              <p>Train and update health checks items with your manual feedbacks which can be reused for sharing feedbacks by the application</p>
+            </div>
+            <a class="secondary-button link-button" href="./train.html">Train the app</a>
+          </div>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="panel-heading">
+            <h2>Generated feedback</h2>
+            <p>
+              Review the draft, copy what you need, then download show stopper,
+              major, and minor checks together as a text file.
+            </p>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-label">Minor checks</span>
+              <strong id="failCount">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Major checks</span>
+              <strong id="impactBadge">0</strong>
+            </article>
+            <article class="summary-card">
+              <span class="summary-label">Show stopper</span>
+              <strong id="showStopperCount">0</strong>
+            </article>
+          </div>
+
+          <label class="field">
+            <span>Show stopper feedback</span>
+            <textarea
+              id="showStopperOutputText"
+              rows="8"
+              placeholder="Show stopper feedback will appear here."
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span>Minor checks feedback</span>
+            <textarea
+              id="minorOutputText"
+              rows="10"
+              placeholder="Minor check feedback will appear here."
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span>Major checks feedback</span>
+            <textarea
+              id="majorOutputText"
+              rows="12"
+              placeholder="Major check feedback will appear here."
+            ></textarea>
+          </label>
+
+          <label class="field">
+            <span>Missed failed checks</span>
+            <textarea
+              id="missedChecksText"
+              rows="8"
+              placeholder="Failed checks without app feedback will appear here."
+            ></textarea>
+          </label>
+
+          <div class="actions">
+            <button id="downloadButton" class="primary-button" type="button" disabled>
+              Download feedback
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="./offline-rules.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
