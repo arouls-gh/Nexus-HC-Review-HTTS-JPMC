@@ -237,10 +237,15 @@ analyzeButton.addEventListener("click", async () => {
     setAnalysisStatus(
       `Found report source. RESULTS files: ${deviceFolder.resultsFiles.length}, LOG files: ${deviceFolder.logFiles.length}. Saving review archive and parsing report...`,
     );
-    const [savedExamples, manualRules, archiveResult] = await Promise.all([
+    const archiveResult = await saveReviewArchive(deviceFolder.hostname, uploadedEntries);
+
+    if (!archiveResult.ok) {
+      throw new Error(`review archive save failed: ${archiveResult.error}`);
+    }
+
+    const [savedExamples, manualRules] = await Promise.all([
       getSavedExamples(),
       getManualRules(),
-      saveReviewArchive(deviceFolder.hostname, uploadedEntries),
     ]);
     const analysis = analyzeDeviceFolder({
       deviceFolder,
@@ -251,7 +256,7 @@ analyzeButton.addEventListener("click", async () => {
 
     renderAnalysis(analysis);
     setAnalysisStatus(
-      `Analysis complete. Minor: ${analysis.minorCount}, Major: ${analysis.majorCount}, Show stopper: ${analysis.showStopperCount}.${archiveResult.ok ? ` Review archive saved.` : ` Review archive save skipped: ${archiveResult.error}`}`,
+      `Analysis complete. Minor: ${analysis.minorCount}, Major: ${analysis.majorCount}, Show stopper: ${analysis.showStopperCount}. Review archive saved.`,
     );
   } catch (error) {
     setAnalysisStatus(`Analysis failed: ${error.message}`);
@@ -798,6 +803,7 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
 
       return {
         label: `${example.deviceResultName || "training-result"} -> ${example.manualFeedbackName || "training-feedback"}`,
+        templateText: String(example.manualFeedbackTemplate || "").trim(),
         feedbackText,
         score:
           sourceScore * 3 +
@@ -818,7 +824,8 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
   }
 
   return {
-    text: normalizeFeedbackText(bestMatch.feedbackText),
+    templateText: bestMatch.templateText,
+    feedbackText: bestMatch.feedbackText,
     label: bestMatch.label,
     score: bestMatch.score,
   };
@@ -841,11 +848,43 @@ function composeFeedback({
     return templateFeedback;
   }
 
-  if (exampleMatch?.text) {
-    return exampleMatch.text;
+  if (exampleMatch) {
+    const trainingFeedback = buildTrainingLibraryFeedback(item, exampleMatch);
+    if (trainingFeedback) {
+      return trainingFeedback;
+    }
   }
 
   return "";
+}
+
+function buildTrainingLibraryFeedback(item, exampleMatch) {
+  const templateText = String(exampleMatch.templateText || "").trim();
+  const rawFeedback = String(exampleMatch.feedbackText || "").trim();
+
+  if (templateText) {
+    const renderedTemplate = normalizeTrainingLibraryFeedback(
+      renderRuleTemplate(templateText, item),
+    );
+
+    if (renderedTemplate) {
+      return renderedTemplate;
+    }
+  }
+
+  return rawFeedback ? normalizeTrainingLibraryFeedback(rawFeedback) : "";
+}
+
+function normalizeTrainingLibraryFeedback(text) {
+  const normalized = replaceCustomerName(String(text || ""))
+    .replace(/\r\n?/g, "\n")
+    .split("\n")
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+
+  return normalized ? truncateSentence(normalized, 420) : "";
 }
 
 function normalizeFeedbackText(text) {
@@ -1203,10 +1242,12 @@ function renderRuleTemplate(template, item, ruleTemplate = null) {
   const compactInterfaces = compactInterfaceList(messages);
   const vrfs = extractVrfsFromMessages(messages);
   const neighborIps = extractNeighborIps(messages);
+  const ipAddresses = extractIpAddressesFromMessages(messages);
   const descriptionLines = dedupe(item.descriptionLines || []).join("\n");
   const commandHint = item.commandHint || "";
   const moduleIds = extractModuleIds(messages);
   const classMaps = extractClassMaps(messages);
+  const bugIds = extractBugIdsFromText([allMessages, descriptionLines, commandHint].join("\n"));
   const utilization = extractReportedUtilization(messages);
   const classification = ruleTemplate?.classification || "";
 
@@ -1224,8 +1265,10 @@ function renderRuleTemplate(template, item, ruleTemplate = null) {
     .replace(/\{\{\s*compact_interfaces\s*\}\}/gi, compactInterfaces)
     .replace(/\{\{\s*vrfs\s*\}\}/gi, vrfs)
     .replace(/\{\{\s*neighbor_ips\s*\}\}/gi, neighborIps)
+    .replace(/\{\{\s*ip_addresses\s*\}\}/gi, ipAddresses)
     .replace(/\{\{\s*module_ids\s*\}\}/gi, moduleIds)
     .replace(/\{\{\s*class_maps\s*\}\}/gi, classMaps)
+    .replace(/\{\{\s*bug_ids\s*\}\}/gi, bugIds)
     .replace(/\{\{\s*utilization\s*\}\}/gi, utilization)
     .replace(/\{\{\s*classification\s*\}\}/gi, classification)
     .trim();
@@ -1759,6 +1802,14 @@ function extractStructuredNeighborIps(messages) {
       return matches.map((match) => match[1]);
     }),
   );
+}
+
+function extractIpAddressesFromMessages(messages) {
+  return dedupe(
+    messages.flatMap((message) =>
+      String(message).match(/\b\d{1,3}(?:\.\d{1,3}){3}\b/g) || [],
+    ),
+  ).join(", ");
 }
 
 function buildRoutingTableFeedback(messages, ruleTemplate, activityType) {

@@ -22,19 +22,26 @@ const MIME_TYPES = {
 const server = http.createServer(async (request, response) => {
   try {
     const requestUrl = new URL(request.url, `http://${HOST}:${PORT}`);
+    const pathname = normalizePathname(requestUrl.pathname);
 
-    if (requestUrl.pathname === "/api/training-library") {
+    if (pathname === "/api/training-library") {
       await handleTrainingLibrary(request, response);
       return;
     }
 
-    if (requestUrl.pathname === "/api/manual-rules") {
+    if (pathname === "/api/manual-rules") {
       await handleManualRules(request, response);
       return;
     }
 
-    if (requestUrl.pathname === "/api/review-archives") {
+    if (pathname === "/api/review-archives") {
       await handleReviewArchives(request, response);
+      return;
+    }
+
+    if (pathname.startsWith("/api/")) {
+      response.writeHead(404, { "Content-Type": "application/json; charset=utf-8" });
+      response.end(JSON.stringify({ error: `Unknown API route: ${pathname}` }));
       return;
     }
 
@@ -226,10 +233,19 @@ async function handleReviewArchives(request, response) {
   const parsed = JSON.parse(body || "{}");
   const files = Array.isArray(parsed.files) ? parsed.files : [];
   const hostname = String(parsed.hostname || "").trim() || "unknown-device";
+  const reportFiles = files.filter((file) =>
+    isFinalReportPath(file.relativePath || file.name || ""),
+  );
 
   if (!files.length) {
     response.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
     response.end(JSON.stringify({ error: "files are required" }));
+    return;
+  }
+
+  if (!reportFiles.length) {
+    response.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+    response.end(JSON.stringify({ error: "No final_report file was found to archive" }));
     return;
   }
 
@@ -256,11 +272,43 @@ async function handleReviewArchives(request, response) {
     await fs.promises.writeFile(absolutePath, String(file.content || ""), "utf8");
   }
 
+  const finalReportsDir = path.join(archiveDir, "final-reports");
+  await fs.promises.mkdir(finalReportsDir, { recursive: true });
+
+  for (const [index, reportFile] of reportFiles.entries()) {
+    const originalName = path.basename(
+      normalizeArchiveRelativePath(reportFile.relativePath || reportFile.name || ""),
+    ) || `final_report_${index + 1}.txt`;
+    const extension = path.extname(originalName) || ".txt";
+    const canonicalName =
+      reportFiles.length === 1
+        ? `final_report${extension}`
+        : `final_report_${index + 1}${extension}`;
+
+    await fs.promises.writeFile(
+      path.join(finalReportsDir, canonicalName),
+      String(reportFile.content || ""),
+      "utf8",
+    );
+
+    if (canonicalName !== originalName) {
+      await fs.promises.writeFile(
+        path.join(finalReportsDir, originalName),
+        String(reportFile.content || ""),
+        "utf8",
+      );
+    }
+  }
+
   const manifest = {
     hostname,
     createdAt,
     fileCount: files.length,
     archiveDirName,
+    finalReportFileCount: reportFiles.length,
+    finalReportFiles: reportFiles.map((file) =>
+      normalizeArchiveRelativePath(file.relativePath || file.name || ""),
+    ),
   };
 
   await fs.promises.writeFile(
@@ -272,7 +320,14 @@ async function handleReviewArchives(request, response) {
   await pruneReviewArchives();
 
   response.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
-  response.end(JSON.stringify({ ok: true, archiveDirName, fileCount: files.length }));
+  response.end(
+    JSON.stringify({
+      ok: true,
+      archiveDirName,
+      fileCount: files.length,
+      finalReportFileCount: reportFiles.length,
+    }),
+  );
 }
 
 async function pruneReviewArchives() {
@@ -319,9 +374,23 @@ function normalizeArchiveRelativePath(value) {
   return normalized;
 }
 
+function isFinalReportPath(value) {
+  return /(?:^|[\\/])RESULTS[\\/].+_final_report\.(txt|json)$/i.test(String(value || ""));
+}
+
+function normalizePathname(value) {
+  const normalized = String(value || "").replace(/\/{2,}/g, "/");
+  if (!normalized || normalized === "/") {
+    return "/";
+  }
+
+  return normalized.endsWith("/") ? normalized.slice(0, -1) : normalized;
+}
+
 async function serveStaticFile(request, response) {
   const requestUrl = new URL(request.url, `http://${HOST}:${PORT}`);
-  const requestPath = requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname;
+  const pathname = normalizePathname(requestUrl.pathname);
+  const requestPath = pathname === "/" ? "/index.html" : pathname;
   const safePath = path.normalize(requestPath).replace(/^(\.\.[/\\])+/, "");
   const absolutePath = path.join(ROOT_DIR, safePath);
 

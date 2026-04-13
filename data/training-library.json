@@ -1,5 +1,5 @@
 {
-  "savedAt": "2026-04-13T00:14:57.413Z",
+  "savedAt": "2026-04-13T06:53:08.285Z",
   "notes": "",
   "examples": [
     {
@@ -2096,6 +2096,539 @@
         ],
         "utilization": ""
       }
+    },
+    {
+      "id": "1776061133884-hr8gbxi0",
+      "type": "check-level-example",
+      "hostname": "D860059-F10LF101",
+      "checkName": "checkCoppPolicyMap",
+      "line": "Class Mapp copp-system-p-class-exception-diag has 1517366 violate bytes",
+      "context": "Class Mapp copp-system-p-class-exception-diag has 1517366 violate bytes | Class Mapp copp-system-p-class-exception-diag has 1284859 violate bytes | Class Mapp copp-system-p-class-exception-diag has 878732 violate bytes | Class Mapp copp-system-p-class-exception-diag has 577063 violate bytes | Class Mapp copp-system-p-class-exception-diag has 622528 violate bytes | Class Mapp copp-system-p-class-monitoring has 54492 violate bytes",
+      "messageLines": [
+        "Class Mapp copp-system-p-class-exception-diag has 1517366 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 1284859 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 878732 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 577063 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 622528 violate bytes",
+        "Class Mapp copp-system-p-class-monitoring has 54492 violate bytes"
+      ],
+      "descriptionLines": [
+        "Check if there are packets labeled as violated or dropped in any of the class-maps",
+        "The check uses the output of the `show policy-map interface control-plane` command"
+      ],
+      "commandHint": "show policy-map interface control-plane,  | xml",
+      "deviceResult": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-exception-diag has 1517366 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 1284859 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 878732 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 577063 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 622528 violate bytes\nClass Mapp copp-system-p-class-monitoring has 54492 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "sourceText": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-exception-diag has 1517366 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 1284859 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 878732 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 577063 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 622528 violate bytes\nClass Mapp copp-system-p-class-monitoring has 54492 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "deviceResultName": "527aa3_D860059-F10LF101_final_report.txt",
+      "manualFeedback": "Below Copp drop has been observed and it could be historical- JPMC team to check the CoPP drops are incrementing.\ncopp-system-p-class-exception-diag, copp-system-p-class-monitoring",
+      "manualFeedbackTemplate": "Below {{class_maps}} drop has been observed and it could be historical- JPMC team to check the {{class_maps}} drops are incrementing.\n{{class_maps}}, {{class_maps}}",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059-F10LF101",
+        "checkName": "checkCoppPolicyMap",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [
+          "Copp",
+          "CoPP",
+          "copp-system-p-class-exception-diag",
+          "copp-system-p-class-monitoring"
+        ],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 138,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776061133885-y4yfxkmh",
+      "type": "check-level-example",
+      "hostname": "D860059-F10LF101",
+      "checkName": "checkInterfaceErrors",
+      "line": "Interface Ethernet1/7 has",
+      "context": "Interface Ethernet1/7 has | align_err='0'/fcs_err='15'/xmit_err='0'/rcv_err='15'/undersize='0'/out_disc='0' errors | Interface Ethernet2/5 has | align_err='0'/fcs_err='0'/xmit_err='6'/rcv_err='0'/undersize='0'/out_disc='0' errors | Interface Ethernet2/8 has | align_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors | Interface Ethernet2/9 has | align_err='0'/fcs_err='11'/xmit_err='0'/rcv_err='11'/undersize='0'/out_disc='0' errors | Interface Ethernet3/5 has | align_err='0'/fcs_err='0'/xmit_err='2'/rcv_err='0'/undersize='0'/out_disc='0' errors | Interface Ethernet3/6 has | align_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors | Interface Ethernet3/7 has | align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors | Interface Ethernet3/9 has | align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors | Interface Ethernet4/5 has | align_err='0'/fcs_err='0'/xmit_err='15'/rcv_err='0'/undersize='0'/out_disc='0' errors",
+      "messageLines": [
+        "Interface Ethernet1/7 has",
+        "align_err='0'/fcs_err='15'/xmit_err='0'/rcv_err='15'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/5 has",
+        "align_err='0'/fcs_err='0'/xmit_err='6'/rcv_err='0'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/8 has",
+        "align_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/9 has",
+        "align_err='0'/fcs_err='11'/xmit_err='0'/rcv_err='11'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet3/5 has",
+        "align_err='0'/fcs_err='0'/xmit_err='2'/rcv_err='0'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet3/6 has",
+        "align_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet3/7 has",
+        "align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet3/9 has",
+        "Interface Ethernet4/5 has",
+        "align_err='0'/fcs_err='0'/xmit_err='15'/rcv_err='0'/undersize='0'/out_disc='0' errors"
+      ],
+      "descriptionLines": [
+        "Check if the device interfaces have any kind of",
+        "error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc)",
+        "The check uses the output of the `show interface counters errors` command",
+        "Same output for N9K/N7K/N5K"
+      ],
+      "commandHint": "show interface counters errors | xml",
+      "deviceResult": "Check: checkInterfaceErrors\nInterface Ethernet1/7 has\nalign_err='0'/fcs_err='15'/xmit_err='0'/rcv_err='15'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/5 has\nalign_err='0'/fcs_err='0'/xmit_err='6'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/8 has\nalign_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/9 has\nalign_err='0'/fcs_err='11'/xmit_err='0'/rcv_err='11'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/5 has\nalign_err='0'/fcs_err='0'/xmit_err='2'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/6 has\nalign_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/7 has\nalign_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/9 has\nInterface Ethernet4/5 has\nalign_err='0'/fcs_err='0'/xmit_err='15'/rcv_err='0'/undersize='0'/out_disc='0' errors\nDescription: Check if the device interfaces have any kind of | error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc) | The check uses the output of the `show interface counters errors` command | Same output for N9K/N7K/N5K\nCommand: show interface counters errors | xml",
+      "sourceText": "Check: checkInterfaceErrors\nInterface Ethernet1/7 has\nalign_err='0'/fcs_err='15'/xmit_err='0'/rcv_err='15'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/5 has\nalign_err='0'/fcs_err='0'/xmit_err='6'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/8 has\nalign_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/9 has\nalign_err='0'/fcs_err='11'/xmit_err='0'/rcv_err='11'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/5 has\nalign_err='0'/fcs_err='0'/xmit_err='2'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/6 has\nalign_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/7 has\nalign_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/9 has\nInterface Ethernet4/5 has\nalign_err='0'/fcs_err='0'/xmit_err='15'/rcv_err='0'/undersize='0'/out_disc='0' errors\nDescription: Check if the device interfaces have any kind of | error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc) | The check uses the output of the `show interface counters errors` command | Same output for N9K/N7K/N5K\nCommand: show interface counters errors | xml",
+      "deviceResultName": "527aa3_D860059-F10LF101_final_report.txt",
+      "manualFeedback": "There are non-zero fcs-err /rcv-errors and output discard observed for multiple devices- JPMC to check if this FCS/CRC counters are historical. If it increments rapidly, JPMC to engage Cisco or take an action appropriately.\nEth1/7, 2/5, 2/8-9, 3/5-7, 3/9, 4/5\n*\nProcess vsh.bin (PID 24266) has CPU utilization of 100.0% (threshold 90%) - JPMC need to validate again by running \"show system internal processes cpu\" and observe cpu history if it remains constant.",
+      "manualFeedbackTemplate": "There are non-zero fcs-err /rcv-errors and output discard observed for multiple devices- JPMC to check if this FCS/CRC counters are historical. If it increments rapidly, JPMC to engage Cisco or take an action appropriately.\nEth1/7, 2/5, 2/8-9, 3/5-7, 3/9, 4/5\n*\nProcess vsh.bin (PID 24266) has CPU utilization of {{utilization}}% (threshold 90%) - JPMC need to validate again by running \"show system internal processes cpu\" and observe cpu history if it remains constant.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059-F10LF101",
+        "checkName": "checkInterfaceErrors",
+        "interfaces": [
+          "Ethernet1/7"
+        ],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": "100.0"
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 131,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188228-cqsvqudh",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkDiagStatus",
+      "line": "Test OBFL in Module 36x40/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )",
+      "context": "Test OBFL in Module 36x40/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )",
+      "messageLines": [
+        "Test OBFL in Module 36x40/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )"
+      ],
+      "descriptionLines": [
+        "Check if the Execution of test in the different modules is successfull",
+        "The check uses the output of the `show diagnostic result module all detail` command",
+        "Same output for N9K/N7K/N5K"
+      ],
+      "commandHint": "show diagnostic result module all detail,  | xml",
+      "deviceResult": "Check: checkDiagStatus\nTest OBFL in Module 36x40/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )\nDescription: Check if the Execution of test in the different modules is successfull | The check uses the output of the `show diagnostic result module all detail` command | Same output for N9K/N7K/N5K\nCommand: show diagnostic result module all detail,  | xml",
+      "sourceText": "Check: checkDiagStatus\nTest OBFL in Module 36x40/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )\nDescription: Check if the Execution of test in the different modules is successfull | The check uses the output of the `show diagnostic result module all detail` command | Same output for N9K/N7K/N5K\nCommand: show diagnostic result module all detail,  | xml",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "Test OBFL in Module 36x40/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )\nModule 4 - 36x40/100G Ethernet Module has diagnostic Fail   : The JPMC team should reseat the module and check if it resolves.",
+      "manualFeedbackTemplate": "Test OBFL in Module {{module_ids}}x{{module_ids}}0/100G Ethernet Module failed. Reason: DIAG TEST ERR DISABLE(The device is )\nModule {{module_ids}} - {{module_ids}}x{{module_ids}}0/100G Ethernet Module has diagnostic Fail   : The JPMC team should reseat the module and check if it resolves.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkDiagStatus",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [
+          "36",
+          "4"
+        ],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 130,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188230-vu50ujmi",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkAdvertisedRoutesBgpPeer",
+      "line": "Neighbor 169.64.10.182 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -",
+      "context": "Neighbor 169.64.10.182 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 - | 170000] | Neighbor 169.64.86.204 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 - | 170000] | Neighbor 207.162.228.4 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 - | 30000] | Neighbor 207.162.228.130 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 - | 30000] | Neighbor 167.85.249.104 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000] | Neighbor 167.85.249.228 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000] | Neighbor 167.85.249.118 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000] | Neighbor 167.85.249.242 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000] | Neighbor 167.85.249.118 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 - | 4000] | Neighbor 167.85.249.242 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 - | 4000] | Neighbor 207.162.233.4 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200] | Neighbor 207.162.233.6 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200] | Neighbor 207.162.233.132 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200] | Neighbor 207.162.233.134 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200] | Neighbor 100.108.1.5 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.21 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.37 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.53 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.69 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.85 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.101 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.117 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.133 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.149 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.165 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | Neighbor 100.108.1.181 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000] | No neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*",
+      "messageLines": [
+        "Neighbor 169.64.10.182 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -",
+        "170000]",
+        "Neighbor 169.64.86.204 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -",
+        "Neighbor 207.162.228.4 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 -",
+        "30000]",
+        "Neighbor 207.162.228.130 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 -",
+        "Neighbor 167.85.249.104 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 167.85.249.228 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 167.85.249.118 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 167.85.249.242 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 167.85.249.118 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 -",
+        "4000]",
+        "Neighbor 167.85.249.242 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 -",
+        "Neighbor 207.162.233.4 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]",
+        "Neighbor 207.162.233.6 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]",
+        "Neighbor 207.162.233.132 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]",
+        "Neighbor 207.162.233.134 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]",
+        "Neighbor 100.108.1.5 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.21 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.37 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.53 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.69 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.85 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.101 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.117 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.133 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.149 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.165 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "Neighbor 100.108.1.181 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]",
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*"
+      ],
+      "descriptionLines": [
+        "Check that the number of advertised prefixes per VRF and per neighbor stays within a range",
+        "Check uses the outut fo the command `show bgp vrf all all neighbors`"
+      ],
+      "commandHint": "",
+      "deviceResult": "Check: checkAdvertisedRoutesBgpPeer\nNeighbor 169.64.10.182 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -\n170000]\nNeighbor 169.64.86.204 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -\nNeighbor 207.162.228.4 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 -\n30000]\nNeighbor 207.162.228.130 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 -\nNeighbor 167.85.249.104 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.228 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.118 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.242 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.118 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 -\n4000]\nNeighbor 167.85.249.242 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 -\nNeighbor 207.162.233.4 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.6 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.132 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.134 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 100.108.1.5 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.21 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.37 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.53 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.69 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.85 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.101 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.117 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.133 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.149 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.165 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.181 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*\nDescription: Check that the number of advertised prefixes per VRF and per neighbor stays within a range | Check uses the outut fo the command `show bgp vrf all all neighbors`",
+      "sourceText": "Check: checkAdvertisedRoutesBgpPeer\nNeighbor 169.64.10.182 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -\n170000]\nNeighbor 169.64.86.204 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 -\nNeighbor 207.162.228.4 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 -\n30000]\nNeighbor 207.162.228.130 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 -\nNeighbor 167.85.249.104 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.228 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.118 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.242 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.118 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 -\n4000]\nNeighbor 167.85.249.242 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 -\nNeighbor 207.162.233.4 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.6 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.132 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.134 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 100.108.1.5 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.21 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.37 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.53 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.69 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.85 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.101 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.117 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.133 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.149 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.165 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.181 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*\nDescription: Check that the number of advertised prefixes per VRF and per neighbor stays within a range | Check uses the outut fo the command `show bgp vrf all all neighbors`",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "Please validate if all the prefixes coming from this neighbour is properly installed in your routing and bgp table .\nNeighbor 169.64.10.182 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 - 170000]\nNeighbor 169.64.86.204 (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 - 170000]\nNeighbor 207.162.228.4 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 - 30000]\nNeighbor 207.162.228.130 (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 - 30000]\nNeighbor 167.85.249.104 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.228 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.118 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.242 (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor 167.85.249.118 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 - 4000]\nNeighbor 167.85.249.242 (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 - 4000]\nNeighbor 207.162.233.4 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.6 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.132 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 207.162.233.134 (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor 100.108.1.5 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.21 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.37 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.53 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.69 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.85 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.101 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.117 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.133 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.149 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.165 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor 100.108.1.181 (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*",
+      "manualFeedbackTemplate": "Please validate if all the prefixes coming from this neighbour is properly installed in your routing and bgp table .\nNeighbor {{neighbor_ips}} (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 - 170000]\nNeighbor {{neighbor_ips}} (.*P_RED_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [127190 - 170000]\nNeighbor {{neighbor_ips}} (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 - 30000]\nNeighbor {{neighbor_ips}} (.*P_BLUE_PLANE_CORE.*) advertises 4939 prefixes. Valid range is [24765 - 30000]\nNeighbor {{neighbor_ips}} (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.*P_DCBB.*) advertises 4939 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 - 4000]\nNeighbor {{neighbor_ips}} (.*P_DCBB_REPLICATION.*) advertises 4939 prefixes. Valid range is [2480 - 4000]\nNeighbor {{neighbor_ips}} (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor {{neighbor_ips}} (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor {{neighbor_ips}} (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor {{neighbor_ips}} (.*P_BLUE_PLANE_HST.*) advertises 3663 prefixes. Valid range is [28 - 200]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNeighbor {{neighbor_ips}} (.*P_PAL.*) advertises 94130 prefixes. Valid range is [12687 - 20000]\nNo neighbors found in VRF {{vrfs}} with peer regex .*P_INT_AGG.*",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkAdvertisedRoutesBgpPeer",
+        "interfaces": [],
+        "vrfs": [
+          "VRF_TIER3"
+        ],
+        "neighborIps": [
+          "169.64.10.182",
+          "169.64.86.204",
+          "207.162.228.4",
+          "207.162.228.130",
+          "167.85.249.104",
+          "167.85.249.228",
+          "167.85.249.118",
+          "167.85.249.242",
+          "207.162.233.4",
+          "207.162.233.6",
+          "207.162.233.132",
+          "207.162.233.134",
+          "100.108.1.5",
+          "100.108.1.21",
+          "100.108.1.37",
+          "100.108.1.53",
+          "100.108.1.69",
+          "100.108.1.85",
+          "100.108.1.101",
+          "100.108.1.117",
+          "100.108.1.133",
+          "100.108.1.149",
+          "100.108.1.165",
+          "100.108.1.181"
+        ],
+        "ipAddresses": [
+          "169.64.10.182",
+          "169.64.86.204",
+          "207.162.228.4",
+          "207.162.228.130",
+          "167.85.249.104",
+          "167.85.249.228",
+          "167.85.249.118",
+          "167.85.249.242",
+          "207.162.233.4",
+          "207.162.233.6",
+          "207.162.233.132",
+          "207.162.233.134",
+          "100.108.1.5",
+          "100.108.1.21",
+          "100.108.1.37",
+          "100.108.1.53",
+          "100.108.1.69",
+          "100.108.1.85",
+          "100.108.1.101",
+          "100.108.1.117",
+          "100.108.1.133",
+          "100.108.1.149",
+          "100.108.1.165",
+          "100.108.1.181"
+        ],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "bgp"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 736,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188230-1i4onjwq",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkInterfaceErrors",
+      "line": "Interface Ethernet1/1 has",
+      "context": "Interface Ethernet1/1 has | align_err='0'/fcs_err='7'/xmit_err='0'/rcv_err='7'/undersize='0'/out_disc='0' errors | Interface Ethernet1/2 has | align_err='0'/fcs_err='3'/xmit_err='0'/rcv_err='3'/undersize='0'/out_disc='0' errors | Interface Ethernet1/5 has | align_err='0'/fcs_err='0'/xmit_err='3'/rcv_err='0'/undersize='0'/out_disc='0' errors | Interface Ethernet2/1 has | align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors | Interface Ethernet2/2 has | align_err='0'/fcs_err='2'/xmit_err='0'/rcv_err='2'/undersize='0'/out_disc='0' errors | Interface Ethernet2/3 has | align_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors | Interface Ethernet2/5 has | align_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors | Interface Ethernet3/1 has | align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors | Interface Ethernet3/2 has | align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors | Interface Ethernet3/3 has | align_err='0'/fcs_err='2'/xmit_err='8'/rcv_err='2'/undersize='0'/out_disc='0' errors | Interface Ethernet3/4 has | align_err='0'/fcs_err='103'/xmit_err='14'/rcv_err='103'/undersize='0'/out_disc='0' errors | Interface Ethernet4/1 has | align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors | Interface Ethernet4/3 has | align_err='0'/fcs_err='4'/xmit_err='0'/rcv_err='4'/undersize='0'/out_disc='0' errors",
+      "messageLines": [
+        "Interface Ethernet1/1 has",
+        "align_err='0'/fcs_err='7'/xmit_err='0'/rcv_err='7'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet1/2 has",
+        "align_err='0'/fcs_err='3'/xmit_err='0'/rcv_err='3'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet1/5 has",
+        "align_err='0'/fcs_err='0'/xmit_err='3'/rcv_err='0'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/1 has",
+        "align_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/2 has",
+        "align_err='0'/fcs_err='2'/xmit_err='0'/rcv_err='2'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/3 has",
+        "align_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet2/5 has",
+        "align_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet3/1 has",
+        "Interface Ethernet3/2 has",
+        "Interface Ethernet3/3 has",
+        "align_err='0'/fcs_err='2'/xmit_err='8'/rcv_err='2'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet3/4 has",
+        "align_err='0'/fcs_err='103'/xmit_err='14'/rcv_err='103'/undersize='0'/out_disc='0' errors",
+        "Interface Ethernet4/1 has",
+        "Interface Ethernet4/3 has",
+        "align_err='0'/fcs_err='4'/xmit_err='0'/rcv_err='4'/undersize='0'/out_disc='0' errors"
+      ],
+      "descriptionLines": [
+        "Check if the device interfaces have any kind of",
+        "error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc)",
+        "The check uses the output of the `show interface counters errors` command",
+        "Same output for N9K/N7K/N5K"
+      ],
+      "commandHint": "show interface counters errors | xml",
+      "deviceResult": "Check: checkInterfaceErrors\nInterface Ethernet1/1 has\nalign_err='0'/fcs_err='7'/xmit_err='0'/rcv_err='7'/undersize='0'/out_disc='0' errors\nInterface Ethernet1/2 has\nalign_err='0'/fcs_err='3'/xmit_err='0'/rcv_err='3'/undersize='0'/out_disc='0' errors\nInterface Ethernet1/5 has\nalign_err='0'/fcs_err='0'/xmit_err='3'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/1 has\nalign_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/2 has\nalign_err='0'/fcs_err='2'/xmit_err='0'/rcv_err='2'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/3 has\nalign_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/5 has\nalign_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/1 has\nInterface Ethernet3/2 has\nInterface Ethernet3/3 has\nalign_err='0'/fcs_err='2'/xmit_err='8'/rcv_err='2'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/4 has\nalign_err='0'/fcs_err='103'/xmit_err='14'/rcv_err='103'/undersize='0'/out_disc='0' errors\nInterface Ethernet4/1 has\nInterface Ethernet4/3 has\nalign_err='0'/fcs_err='4'/xmit_err='0'/rcv_err='4'/undersize='0'/out_disc='0' errors\nDescription: Check if the device interfaces have any kind of | error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc) | The check uses the output of the `show interface counters errors` command | Same output for N9K/N7K/N5K\nCommand: show interface counters errors | xml",
+      "sourceText": "Check: checkInterfaceErrors\nInterface Ethernet1/1 has\nalign_err='0'/fcs_err='7'/xmit_err='0'/rcv_err='7'/undersize='0'/out_disc='0' errors\nInterface Ethernet1/2 has\nalign_err='0'/fcs_err='3'/xmit_err='0'/rcv_err='3'/undersize='0'/out_disc='0' errors\nInterface Ethernet1/5 has\nalign_err='0'/fcs_err='0'/xmit_err='3'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/1 has\nalign_err='0'/fcs_err='1'/xmit_err='0'/rcv_err='1'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/2 has\nalign_err='0'/fcs_err='2'/xmit_err='0'/rcv_err='2'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/3 has\nalign_err='0'/fcs_err='6'/xmit_err='0'/rcv_err='6'/undersize='0'/out_disc='0' errors\nInterface Ethernet2/5 has\nalign_err='0'/fcs_err='0'/xmit_err='11'/rcv_err='0'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/1 has\nInterface Ethernet3/2 has\nInterface Ethernet3/3 has\nalign_err='0'/fcs_err='2'/xmit_err='8'/rcv_err='2'/undersize='0'/out_disc='0' errors\nInterface Ethernet3/4 has\nalign_err='0'/fcs_err='103'/xmit_err='14'/rcv_err='103'/undersize='0'/out_disc='0' errors\nInterface Ethernet4/1 has\nInterface Ethernet4/3 has\nalign_err='0'/fcs_err='4'/xmit_err='0'/rcv_err='4'/undersize='0'/out_disc='0' errors\nDescription: Check if the device interfaces have any kind of | error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc) | The check uses the output of the `show interface counters errors` command | Same output for N9K/N7K/N5K\nCommand: show interface counters errors | xml",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "There are non-zero fcs-err /rcv-errors and output discard observed for multiple devices- JPMC to check if this FCS/CRC counters are historical.\nIf it increments rapidly, JPMC to engage Cisco or take an action appropriately.\nEthernet1/1-1/2, 1/5, Ethernet2/1-2/3, 2/5, Ethernet3/1-3/4, Ethernet4/1, 4/3",
+      "manualFeedbackTemplate": "There are non-zero fcs-err /rcv-errors and output discard observed for multiple devices- JPMC to check if this FCS/CRC counters are historical.\nIf it increments rapidly, JPMC to engage Cisco or take an action appropriately.\n{{interfaces}}-1/2, 1/5, {{interfaces}}-2/3, 2/5, {{interfaces}}-3/4, {{interfaces}}, 4/3",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkInterfaceErrors",
+        "interfaces": [
+          "Ethernet1/1",
+          "Ethernet2/1",
+          "Ethernet3/1",
+          "Ethernet4/1"
+        ],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 178,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188230-mnip35xu",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkCoppPolicyMap",
+      "line": "Class Mapp copp-system-p-class-exception-diag has 34857383 violate bytes",
+      "context": "Class Mapp copp-system-p-class-exception-diag has 34857383 violate bytes | Class Mapp copp-system-p-class-exception-diag has 16939715 violate bytes | Class Mapp copp-system-p-class-exception-diag has 12490564 violate bytes | Class Mapp copp-system-p-class-exception-diag has 13202851 violate bytes | Class Mapp copp-system-p-class-exception-diag has 1586301 violate bytes",
+      "messageLines": [
+        "Class Mapp copp-system-p-class-exception-diag has 34857383 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 16939715 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 12490564 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 13202851 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 1586301 violate bytes"
+      ],
+      "descriptionLines": [
+        "Check if there are packets labeled as violated or dropped in any of the class-maps",
+        "The check uses the output of the `show policy-map interface control-plane` command"
+      ],
+      "commandHint": "show policy-map interface control-plane,  | xml",
+      "deviceResult": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-exception-diag has 34857383 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 16939715 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 12490564 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 13202851 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 1586301 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "sourceText": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-exception-diag has 34857383 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 16939715 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 12490564 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 13202851 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 1586301 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "Below Copp drop has been observed and it could be historical- JPMC team to check the CoPP drops are incrementing.\nCopp-system-p-class-exception-diag",
+      "manualFeedbackTemplate": "Below {{class_maps}} drop has been observed and it could be historical- JPMC team to check the {{class_maps}} drops are incrementing.\n{{class_maps}}",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkCoppPolicyMap",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [
+          "Copp",
+          "CoPP",
+          "Copp-system-p-class-exception-diag"
+        ],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 116,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188231-68gz7l2c",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkFeature",
+      "line": "Feature dhcp is configured but not in expected feature list",
+      "context": "Feature dhcp is configured but not in expected feature list | Feature macsec is not enabled on switch but is in expected feature list | Feature netflow is not enabled on switch but is in expected feature list",
+      "messageLines": [
+        "Feature dhcp is configured but not in expected feature list",
+        "Feature macsec is not enabled on switch but is in expected feature list",
+        "Feature netflow is not enabled on switch but is in expected feature list"
+      ],
+      "descriptionLines": [
+        "Check if the required features are configured on the device also if unneeded features are",
+        "enabled for that device role"
+      ],
+      "commandHint": "show feature | xml",
+      "deviceResult": "Check: checkFeature\nFeature dhcp is configured but not in expected feature list\nFeature macsec is not enabled on switch but is in expected feature list\nFeature netflow is not enabled on switch but is in expected feature list\nDescription: Check if the required features are configured on the device also if unneeded features are | enabled for that device role\nCommand: show feature | xml",
+      "sourceText": "Check: checkFeature\nFeature dhcp is configured but not in expected feature list\nFeature macsec is not enabled on switch but is in expected feature list\nFeature netflow is not enabled on switch but is in expected feature list\nDescription: Check if the required features are configured on the device also if unneeded features are | enabled for that device role\nCommand: show feature | xml",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "Feature macsec, netflow is not configured but is in expected feature list - JPMC team to validate it on their end.",
+      "manualFeedbackTemplate": "Feature macsec, netflow is not configured but is in expected feature list - JPMC team to validate it on their end.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkFeature",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 116,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188231-mzb2dh3w",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkFwdUtilization",
+      "line": "Module 1: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70",
+      "context": "Module 1: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70 | Module 2: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70 | Module 3: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70 | Module 4: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70",
+      "messageLines": [
+        "Module 1: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70",
+        "Module 2: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70",
+        "Module 3: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70",
+        "Module 4: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70"
+      ],
+      "descriptionLines": [
+        "Check utilization in the internal forwarding tables",
+        "The check uses the output of the `show hard internal forwarding table utilization` command"
+      ],
+      "commandHint": "show hardware internal forwarding table, utilization | xml,show hardware internal, forwarding table utilization",
+      "deviceResult": "Check: checkFwdUtilization\nModule 1: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 2: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 3: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 4: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nDescription: Check utilization in the internal forwarding tables | The check uses the output of the `show hard internal forwarding table utilization` command\nCommand: show hardware internal forwarding table, utilization | xml,show hardware internal, forwarding table utilization",
+      "sourceText": "Check: checkFwdUtilization\nModule 1: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 2: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 3: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 4: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nDescription: Check utilization in the internal forwarding tables | The check uses the output of the `show hard internal forwarding table utilization` command\nCommand: show hardware internal forwarding table, utilization | xml,show hardware internal, forwarding table utilization",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "TCAM utilization is greater than threshold for below modules- JPMC need to verify further\nModule 1: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 2: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 3: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70\nModule 4: IPv4 LPM TCAM routes utilization greater than threshold. Actual utilization 57.70",
+      "manualFeedbackTemplate": "TCAM utilization is greater than threshold for below modules- JPMC need to verify further\nModule {{module_ids}}: IPv{{module_ids}} LPM TCAM routes utilization greater than threshold. Actual utilization {{utilization}}\nModule {{module_ids}}: IPv{{module_ids}} LPM TCAM routes utilization greater than threshold. Actual utilization {{utilization}}\nModule {{module_ids}}: IPv{{module_ids}} LPM TCAM routes utilization greater than threshold. Actual utilization {{utilization}}\nModule {{module_ids}}: IPv{{module_ids}} LPM TCAM routes utilization greater than threshold. Actual utilization {{utilization}}",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkFwdUtilization",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": "57.70"
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 120,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776063188231-zzn3ds1y",
+      "type": "check-level-example",
+      "hostname": "D860059R782",
+      "checkName": "checkL3InterfaceStatus",
+      "line": "Interface Lo4 in vrf VRF_REPLICATION is down/down (proto/link)",
+      "context": "Interface Lo4 in vrf VRF_REPLICATION is down/down (proto/link)",
+      "messageLines": [
+        "Interface Lo4 in vrf VRF_REPLICATION is down/down (proto/link)"
+      ],
+      "descriptionLines": [
+        "Check the status of the Layer-3 interfaces",
+        "The check uses the output of the `show ip interface brief vrf all` command"
+      ],
+      "commandHint": "show ip interface brief vrf all | xml",
+      "deviceResult": "Check: checkL3InterfaceStatus\nInterface Lo4 in vrf VRF_REPLICATION is down/down (proto/link)\nDescription: Check the status of the Layer-3 interfaces | The check uses the output of the `show ip interface brief vrf all` command\nCommand: show ip interface brief vrf all | xml",
+      "sourceText": "Check: checkL3InterfaceStatus\nInterface Lo4 in vrf VRF_REPLICATION is down/down (proto/link)\nDescription: Check the status of the Layer-3 interfaces | The check uses the output of the `show ip interface brief vrf all` command\nCommand: show ip interface brief vrf all | xml",
+      "deviceResultName": "f9e04a_D860059R782_final_report.txt",
+      "manualFeedback": "Interface Lo4 in vrf VRF_REPLICATION is down/down: JPMC team to validate it on their end.",
+      "manualFeedbackTemplate": "Interface Lo4 in vrf {{vrfs}} is down/down: JPMC team to validate it on their end.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D860059R782",
+        "checkName": "checkL3InterfaceStatus",
+        "interfaces": [],
+        "vrfs": [
+          "VRF_REPLICATION"
+        ],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "low",
+      "confidenceScore": 41,
+      "mappingMethod": "reviewed-auto-map"
     }
   ]
 }
