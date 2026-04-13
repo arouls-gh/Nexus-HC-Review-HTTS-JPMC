@@ -1,0 +1,13 @@
+{
+  "name": "nexus-hc-review-htts-jpmc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nexus health check review app for HTTS-JPMC-CELL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
