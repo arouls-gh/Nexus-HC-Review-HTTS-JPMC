@@ -805,6 +805,12 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
         label: `${example.deviceResultName || "training-result"} -> ${example.manualFeedbackName || "training-feedback"}`,
         templateText: String(example.manualFeedbackTemplate || "").trim(),
         feedbackText,
+        feedbackVariables:
+          example.manualFeedbackVariables &&
+          typeof example.manualFeedbackVariables === "object"
+            ? example.manualFeedbackVariables
+            : {},
+        exampleCommandHint: String(example.commandHint || "").trim(),
         score:
           sourceScore * 3 +
           feedbackScore +
@@ -826,6 +832,8 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
   return {
     templateText: bestMatch.templateText,
     feedbackText: bestMatch.feedbackText,
+    feedbackVariables: bestMatch.feedbackVariables,
+    exampleCommandHint: bestMatch.exampleCommandHint,
     label: bestMatch.label,
     score: bestMatch.score,
   };
@@ -849,13 +857,135 @@ function composeFeedback({
   }
 
   if (exampleMatch) {
-    const trainingFeedback = buildTrainingLibraryFeedback(item, exampleMatch);
+    const trainingFeedback =
+      window.FEEDBACK_ENGINE?.buildFeedback(
+        {
+          item,
+          exampleMatch,
+          matchedRule,
+          activityType,
+        },
+        buildFeedbackEngineHelpers(),
+      ) || buildTrainingLibraryFeedback(item, exampleMatch);
     if (trainingFeedback) {
       return trainingFeedback;
     }
   }
 
   return "";
+}
+
+function buildFeedbackEngineHelpers() {
+  return {
+    buildTrainingLibraryFeedback,
+    normalizeActionClause,
+    normalizeCheckName,
+    normalizeTrainingLibraryFeedback,
+    renderRuleTemplate,
+    summarizeFeatureMessages,
+    summarizeLacpMessages,
+    buildCoppSummary,
+    summarizeRoutingMessages,
+    extractFwdUtilizationLine,
+    extractStructuredInterfaceNames,
+    extractInterfaceNames,
+    compactInterfaceList,
+    extractStructuredVrfs,
+    extractVrfsFromMessages,
+    extractStructuredNeighborIps,
+    extractNeighborIps,
+    extractIpAddressesFromMessages,
+    extractStructuredModuleIds,
+    extractModuleIds,
+    extractStructuredClassMaps,
+    extractClassMaps,
+    extractBugIdsFromText,
+    extractReportedUtilization,
+    dedupe,
+    extractActionClauseFromFeedback,
+  };
+}
+
+function extractActionClauseFromFeedback(text) {
+  const normalized = normalizeTrainingLibraryFeedback(text);
+  if (!normalized) {
+    return "";
+  }
+
+  const directMatch =
+    normalized.match(/\b(?:Customer|JPMC)(?:\s+team)?\s+(?:should|needs?\s+to|need\s+to)\s+(.+?)(?:\.|$)/i) ||
+    normalized.match(/\bPlease\s+(.+?)(?:\.|$)/i);
+  if (directMatch?.[1]) {
+    return normalizeActionClause(directMatch[1]);
+  }
+
+  const dashedParts = normalized
+    .split(/\s+-\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  const actionPart = dashedParts.find((part) => containsActionCue(part));
+  if (actionPart) {
+    return normalizeActionClause(actionPart);
+  }
+
+  const actionLine = normalized
+    .split("\n")
+    .map((line) => line.trim())
+    .find((line) => containsActionCue(line));
+  return actionLine ? normalizeActionClause(actionLine) : "";
+}
+
+function normalizeActionClause(text) {
+  return String(text || "")
+    .replace(/\bJPMC\b/gi, "Customer")
+    .replace(/^(?:Customer|Cisco|PE team|team)(?:\s+team)?\s+/i, "")
+    .replace(/^(?:should|must)\s+/i, "")
+    .replace(/^needs?\s+to\s+/i, "")
+    .replace(/^need\s+to\s+/i, "")
+    .replace(/^to\s+/i, "")
+    .replace(/^please\s+/i, "")
+    .replace(/\s+/g, " ")
+    .replace(/[.]+$/g, "")
+    .trim();
+}
+
+function containsActionCue(text) {
+  return /\b(check|verify|validate|confirm|ensure|review|compare|inspect|monitor|engage|investigate|should|needs?\s+to|need\s+to|please)\b/i.test(
+    String(text || ""),
+  );
+}
+
+function normalizeCommandHint(commandHint) {
+  const normalized = String(commandHint || "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*\|\s*/g, " | ")
+    .trim();
+
+  return normalized ? `\`${normalized}\`` : "";
+}
+
+function ensureSentence(text) {
+  const normalized = String(text || "").replace(/\s+/g, " ").trim();
+
+  if (!normalized) {
+    return "";
+  }
+
+  return /[.!?]$/.test(normalized) ? normalized : `${normalized}.`;
+}
+
+function formatPreviewList(values, maxItems = 4) {
+  const items = dedupe((values || []).map((value) => String(value).trim())).filter(Boolean);
+
+  if (!items.length) {
+    return "";
+  }
+
+  if (items.length <= maxItems) {
+    return items.join(", ");
+  }
+
+  return `${items.slice(0, maxItems).join(", ")} (+${items.length - maxItems} more)`;
 }
 
 function buildTrainingLibraryFeedback(item, exampleMatch) {
@@ -1354,6 +1484,30 @@ function summarizeFeatureMessages(messages) {
   }
 
   return parts.join(". ");
+}
+
+function extractFeatureSignals(messages) {
+  const configured = [];
+  const missing = [];
+
+  messages.forEach((message) => {
+    const configuredMatch = message.match(/Feature\s+(.+?)\s+is configured but not in expected feature list/i);
+    if (configuredMatch) {
+      configured.push(configuredMatch[1]);
+    }
+
+    const missingMatch =
+      message.match(/Feature\s+(.+?)\s+is not configured but is in expected feature list/i) ||
+      message.match(/Feature\s+(.+?)\s+is not enabled on switch but is in expected feature list/i);
+    if (missingMatch) {
+      missing.push(missingMatch[1]);
+    }
+  });
+
+  return {
+    configured: dedupe(configured),
+    missing: dedupe(missing),
+  };
 }
 
 function buildFeatureFeedback(messages, ruleTemplate, activityType) {
