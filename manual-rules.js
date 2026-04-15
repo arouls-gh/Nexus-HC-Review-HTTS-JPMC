@@ -6,6 +6,8 @@ const manualRuleStatusEl = document.querySelector("#manualRuleStatus");
 const manualRulesListEl = document.querySelector("#manualRulesList");
 const manualRuleDetailsEl = document.querySelector("#manualRuleDetails");
 const deleteManualRuleButton = document.querySelector("#deleteManualRuleButton");
+const buildApiUrl =
+  window.APP_CONFIG?.buildApiUrl || ((resource) => `/api/${String(resource || "").replace(/^\/+/, "")}`);
 
 let savedManualRules = [];
 let selectedRuleCheckName = "";
@@ -22,7 +24,7 @@ saveManualRuleButton.addEventListener("click", async () => {
     return;
   }
 
-  const response = await fetch("/api/manual-rules", {
+  const response = await fetch(buildApiUrl("manual-rules"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -39,7 +41,11 @@ saveManualRuleButton.addEventListener("click", async () => {
   });
 
   if (!response.ok) {
-    window.alert("Unable to save the manual rule.");
+    const errorMessage = await readErrorMessage(
+      response,
+      "Unable to save the manual rule.",
+    );
+    window.alert(errorMessage);
     return;
   }
 
@@ -59,7 +65,7 @@ deleteManualRuleButton.addEventListener("click", async () => {
     return;
   }
 
-  const response = await fetch("/api/manual-rules", {
+  const response = await fetch(buildApiUrl("manual-rules"), {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -87,7 +93,7 @@ function initializeManualRulesPage() {
 
 async function loadManualRules(previousSelection = "") {
   try {
-    const response = await fetch("/api/manual-rules");
+    const response = await fetch(buildApiUrl("manual-rules"));
 
     if (!response.ok) {
       renderManualRules({ savedAt: null, rules: [] }, previousSelection);

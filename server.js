@@ -2,10 +2,11 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const HOST = "127.0.0.1";
-const PORT = 3000;
+const HOST = process.env.HOST || "127.0.0.1";
+const PORT = Number.parseInt(process.env.PORT || "3000", 10);
 const ROOT_DIR = __dirname;
-const DATA_DIR = path.join(ROOT_DIR, "data");
+const APP_BASE_PATH = normalizeBasePath(process.env.APP_BASE_PATH || "");
+const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(ROOT_DIR, "data"));
 const REVIEW_ARCHIVE_DIR = path.join(DATA_DIR, "review-archives");
 const TRAINING_FILE = path.join(DATA_DIR, "training-library.json");
 const MANUAL_RULES_FILE = path.join(DATA_DIR, "manual-rules.json");
@@ -23,29 +24,36 @@ const server = http.createServer(async (request, response) => {
   try {
     const requestUrl = new URL(request.url, `http://${HOST}:${PORT}`);
     const pathname = normalizePathname(requestUrl.pathname);
+    const appPathname = stripBasePath(pathname);
 
-    if (pathname === "/api/training-library") {
+    if (appPathname == null) {
+      response.writeHead(404, { "Content-Type": "application/json; charset=utf-8" });
+      response.end(JSON.stringify({ error: `Unknown route: ${pathname}` }));
+      return;
+    }
+
+    if (appPathname === "/api/training-library") {
       await handleTrainingLibrary(request, response);
       return;
     }
 
-    if (pathname === "/api/manual-rules") {
+    if (appPathname === "/api/manual-rules") {
       await handleManualRules(request, response);
       return;
     }
 
-    if (pathname === "/api/review-archives") {
+    if (appPathname === "/api/review-archives") {
       await handleReviewArchives(request, response);
       return;
     }
 
-    if (pathname.startsWith("/api/")) {
+    if (appPathname.startsWith("/api/")) {
       response.writeHead(404, { "Content-Type": "application/json; charset=utf-8" });
       response.end(JSON.stringify({ error: `Unknown API route: ${pathname}` }));
       return;
     }
 
-    await serveStaticFile(request, response);
+    await serveStaticFile(request, response, appPathname);
   } catch (error) {
     response.writeHead(500, { "Content-Type": "application/json; charset=utf-8" });
     response.end(JSON.stringify({ error: error.message }));
@@ -53,7 +61,8 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`Nexus reviewer running at http://${HOST}:${PORT}`);
+  const baseSuffix = APP_BASE_PATH || "";
+  console.log(`Nexus reviewer running at http://${HOST}:${PORT}${baseSuffix}/`);
 });
 
 async function handleTrainingLibrary(request, response) {
@@ -387,10 +396,32 @@ function normalizePathname(value) {
   return normalized.endsWith("/") ? normalized.slice(0, -1) : normalized;
 }
 
-async function serveStaticFile(request, response) {
-  const requestUrl = new URL(request.url, `http://${HOST}:${PORT}`);
-  const pathname = normalizePathname(requestUrl.pathname);
-  const requestPath = pathname === "/" ? "/index.html" : pathname;
+function normalizeBasePath(value) {
+  const normalized = normalizePathname(String(value || "").trim());
+  return normalized === "/" ? "" : normalized;
+}
+
+function stripBasePath(pathname) {
+  if (!APP_BASE_PATH) {
+    return pathname;
+  }
+
+  if (pathname === APP_BASE_PATH) {
+    return "/";
+  }
+
+  if (pathname.startsWith(`${APP_BASE_PATH}/`)) {
+    return pathname.slice(APP_BASE_PATH.length) || "/";
+  }
+
+  return null;
+}
+
+async function serveStaticFile(request, response, appPathname = null) {
+  const requestPathname =
+    appPathname ||
+    stripBasePath(normalizePathname(new URL(request.url, `http://${HOST}:${PORT}`).pathname));
+  const requestPath = requestPathname === "/" ? "/index.html" : requestPathname;
   const safePath = path.normalize(requestPath).replace(/^(\.\.[/\\])+/, "");
   const absolutePath = path.join(ROOT_DIR, safePath);
 

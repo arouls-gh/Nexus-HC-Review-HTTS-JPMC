@@ -11,6 +11,8 @@ const showStopperCountEl = document.querySelector("#showStopperCount");
 const analyzeButton = document.querySelector("#analyzeButton");
 const downloadButton = document.querySelector("#downloadButton");
 const offlineRules = window.OFFLINE_RULES || { checkTemplates: {}, customerName: "Customer" };
+const buildApiUrl =
+  window.APP_CONFIG?.buildApiUrl || ((resource) => `/api/${String(resource || "").replace(/^\/+/, "")}`);
 let currentDownloadHostname = "";
 
 const activityProfiles = {
@@ -307,7 +309,7 @@ async function readFiles(fileList) {
 
 async function getSavedExamples() {
   try {
-    const response = await fetch("/api/training-library");
+    const response = await fetch(buildApiUrl("training-library"));
 
     if (!response.ok) {
       return [];
@@ -322,7 +324,7 @@ async function getSavedExamples() {
 
 async function getManualRules() {
   try {
-    const response = await fetch("/api/manual-rules");
+    const response = await fetch(buildApiUrl("manual-rules"));
 
     if (!response.ok) {
       return {};
@@ -350,7 +352,7 @@ async function getManualRules() {
 
 async function saveReviewArchive(hostname, uploadedEntries) {
   try {
-    const response = await fetch("/api/review-archives", {
+    const response = await fetch(buildApiUrl("review-archives"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",

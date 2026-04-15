@@ -9,6 +9,8 @@ const trainingStatusEl = document.querySelector("#trainingStatus");
 const mappingSummaryEl = document.querySelector("#mappingSummary");
 const uncertainMappingPanel = document.querySelector("#uncertainMappingPanel");
 const uncertainMappingsEl = document.querySelector("#uncertainMappings");
+const buildApiUrl =
+  window.APP_CONFIG?.buildApiUrl || ((resource) => `/api/${String(resource || "").replace(/^\/+/, "")}`);
 
 let pendingTrainingState = null;
 
@@ -106,7 +108,7 @@ saveTrainingButton.addEventListener("click", async () => {
     examples: [...(existingLibrary?.examples || []), ...reviewedExamples],
   };
 
-  const response = await fetch("/api/training-library", {
+  const response = await fetch(buildApiUrl("training-library"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -174,7 +176,7 @@ async function loadTrainingLibrary() {
 
 async function loadTrainingLibraryData() {
   try {
-    const response = await fetch("/api/training-library");
+    const response = await fetch(buildApiUrl("training-library"));
 
     if (!response.ok) {
       return null;
