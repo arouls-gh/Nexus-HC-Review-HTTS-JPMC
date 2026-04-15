@@ -1480,7 +1480,7 @@ function normalizeBulletText(text) {
 function normalizeBulletLine(line) {
   const cleaned = String(line || "").replace(/\s+$/g, "");
   const bulletMatch = cleaned.match(
-    /^(\s*)([\u2022\u25CF\u25E6\u00B7*o-]|\d+[\.\)])\s*(.+)$/i,
+    /^(\s*)([\u2022\u25CF\u25E6\u00B7*o-]|\d+[\.\)])(?:\s+(.*))?$/i,
   );
 
   if (!bulletMatch) {
@@ -1489,15 +1489,15 @@ function normalizeBulletLine(line) {
 
   const indent = bulletMatch[1] || "";
   const content = (bulletMatch[3] || "").trim();
-  return content ? `${indent}* ${content}` : "";
+  return content ? `${indent}* ${content}` : `${indent}*`;
 }
 
 function isBulletLine(line) {
-  return /^\s*\*\s+/.test(String(line || ""));
+  return /^\s*\*(?:\s+.*)?$/.test(String(line || ""));
 }
 
 function stripBulletPrefix(line) {
-  return String(line || "").replace(/^\s*\*\s+/, "").trim();
+  return String(line || "").replace(/^\s*\*\s*/, "").trim();
 }
 
 function looksLikeNewFeedbackSentence(line) {

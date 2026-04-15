@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const HOST = process.env.HOST || "127.0.0.1";
+const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number.parseInt(process.env.PORT || "3000", 10);
 const ROOT_DIR = __dirname;
 const APP_BASE_PATH = normalizeBasePath(process.env.APP_BASE_PATH || "");
