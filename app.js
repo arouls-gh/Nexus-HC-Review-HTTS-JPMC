@@ -14,6 +14,7 @@ const offlineRules = window.OFFLINE_RULES || { checkTemplates: {}, customerName:
 const buildApiUrl =
   window.APP_CONFIG?.buildApiUrl || ((resource) => `/api/${String(resource || "").replace(/^\/+/, "")}`);
 let currentDownloadHostname = "";
+let latestAnalysis = null;
 
 const activityProfiles = {
   "code-upgrade": {
@@ -225,10 +226,18 @@ analyzeButton.addEventListener("click", async () => {
     const deviceFolder = buildDeviceFolder(uploadedEntries);
 
     if (!deviceFolder) {
-      setAnalysisStatus("Folder detected, but no valid RESULTS final report file was found.");
-      window.alert(
-        "The selected folder does not include a valid RESULTS final report file.",
+      setAnalysisStatus(
+        "Folder detected, but no valid _final_report file was found in either RESULTS or the selected folder.",
       );
+      window.alert(
+        "The selected folder does not include a valid _final_report file in RESULTS or directly inside the selected folder.",
+      );
+      return;
+    }
+
+    if (deviceFolder.reportSelectionError) {
+      setAnalysisStatus(deviceFolder.reportSelectionError);
+      window.alert(deviceFolder.reportSelectionError);
       return;
     }
 
@@ -245,14 +254,16 @@ analyzeButton.addEventListener("click", async () => {
       throw new Error(`review archive save failed: ${archiveResult.error}`);
     }
 
-    const [savedExamples, manualRules] = await Promise.all([
+    const [savedExamples, generatedExamples, manualRules] = await Promise.all([
       getSavedExamples(),
+      getGeneratedFeedbackExamples(),
       getManualRules(),
     ]);
     const analysis = analyzeDeviceFolder({
       deviceFolder,
       activityType,
       exampleLibrary: savedExamples,
+      generatedExampleLibrary: generatedExamples,
       manualRules,
     });
 
@@ -267,7 +278,7 @@ analyzeButton.addEventListener("click", async () => {
   }
 });
 
-downloadButton.addEventListener("click", () => {
+downloadButton.addEventListener("click", async () => {
   const content = buildDownloadContent().trim();
 
   if (!content) {
@@ -286,6 +297,24 @@ downloadButton.addEventListener("click", () => {
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
+
+  const generatedExamples = buildGeneratedFeedbackExamples(latestAnalysis);
+  if (!generatedExamples.length) {
+    return;
+  }
+
+  const saveResult = await saveGeneratedFeedbackExamples(generatedExamples);
+  if (!saveResult.ok) {
+    console.warn("Unable to store generated feedback examples", saveResult.error);
+    setAnalysisStatus(
+      `Analysis complete, but generated feedback memory was not saved: ${saveResult.error}`,
+    );
+    return;
+  }
+
+  setAnalysisStatus(
+    `Analysis complete. Downloaded feedback and saved ${generatedExamples.length} generated feedback example(s) to the generated feedback library.`,
+  );
 });
 
 function initialize() {
@@ -310,6 +339,21 @@ async function readFiles(fileList) {
 async function getSavedExamples() {
   try {
     const response = await fetch(buildApiUrl("training-library"));
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const parsed = await response.json();
+    return Array.isArray(parsed.examples) ? parsed.examples : [];
+  } catch {
+    return [];
+  }
+}
+
+async function getGeneratedFeedbackExamples() {
+  try {
+    const response = await fetch(buildApiUrl("generated-feedback-library"));
 
     if (!response.ok) {
       return [];
@@ -380,32 +424,94 @@ async function saveReviewArchive(hostname, uploadedEntries) {
   }
 }
 
+async function saveGeneratedFeedbackExamples(examples) {
+  try {
+    const response = await fetch(buildApiUrl("generated-feedback-library"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({
+        savedAt: new Date().toISOString(),
+        examples,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorPayload = await response.json().catch(() => ({}));
+      return {
+        ok: false,
+        error: errorPayload.error || `request failed with status ${response.status}`,
+      };
+    }
+
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error: error.message || "generated feedback save failed" };
+  }
+}
+
 function buildDeviceFolder(uploadedEntries) {
-  const resultsFiles = uploadedEntries.filter((entry) =>
+  const nestedResultsFiles = uploadedEntries.filter((entry) =>
     /\/RESULTS\/.+_final_report\.(txt|json)$/i.test(entry.relativePath),
+  );
+  const directReportFiles = uploadedEntries.filter((entry) =>
+    isDirectFinalReportPath(entry.relativePath),
   );
   const logFiles = uploadedEntries.filter((entry) =>
     /\/LOGS\/.+\.(xml|txt)$/i.test(entry.relativePath),
   );
+  const resultsFiles = nestedResultsFiles.length ? nestedResultsFiles : directReportFiles;
 
   if (!resultsFiles.length) {
     return null;
   }
 
+  if (resultsFiles.length > 1) {
+    return {
+      reportSelectionError:
+        "Multiple _final_report files were found in the selected folder. Please upload a folder containing only one final report file.",
+    };
+  }
+
   const parentFolderName =
     uploadedEntries[0]?.relativePath.split("/")[0] || "Unknown device";
+  const selectedReport = resultsFiles[0] || null;
   const txtReport =
     resultsFiles.find((entry) => /_final_report\.txt$/i.test(entry.name)) ?? null;
   const jsonReport =
     resultsFiles.find((entry) => /_final_report\.json$/i.test(entry.name)) ?? null;
+  const derivedHostname =
+    extractHostname(selectedReport?.content || "") ||
+    parentFolderName ||
+    extractHostnameFromReportName(selectedReport?.name || "");
 
   return {
-    hostname: parentFolderName,
+    hostname: derivedHostname,
     resultsFiles,
     logFiles,
     txtReport,
     jsonReport,
+    reportSelectionError: "",
   };
+}
+
+function isDirectFinalReportPath(relativePath) {
+  const normalizedPath = String(relativePath || "").replace(/\\/g, "/");
+  const segments = normalizedPath.split("/").filter(Boolean);
+
+  return (
+    segments.length === 2 &&
+    /_final_report\.(txt|json)$/i.test(segments[1]) &&
+    !/^RESULTS$/i.test(segments[0]) &&
+    !/^LOGS$/i.test(segments[0])
+  );
+}
+
+function extractHostnameFromReportName(fileName) {
+  const normalizedName = String(fileName || "").trim();
+  const match = normalizedName.match(/^[^_]+_(.+?)_final_report\.(?:txt|json)$/i);
+  return match ? match[1] : normalizedName.replace(/_final_report\.(?:txt|json)$/i, "");
 }
 
 function setAnalysisStatus(message) {
@@ -441,8 +547,9 @@ function resetMainPageState() {
 function analyzeDeviceFolder({
   deviceFolder,
   activityType,
-  exampleLibrary,
-  manualRules,
+  exampleLibrary = [],
+  generatedExampleLibrary = [],
+  manualRules = {},
 }) {
   const reportData = extractReportData(deviceFolder);
   const findings = reportData.failItems.map((item, index) =>
@@ -451,6 +558,7 @@ function analyzeDeviceFolder({
       activityType,
       index,
       exampleLibrary,
+      generatedExampleLibrary,
       logFiles: deviceFolder.logFiles,
       manualRules,
     }),
@@ -473,6 +581,10 @@ function analyzeDeviceFolder({
     showStopperCount: deliveredFindings.filter((finding) => finding.classification === "show-stopper").length,
     impactLevel,
     output,
+    findings: deliveredFindings,
+    hostname: reportData.hostname,
+    reportName: reportData.reportName,
+    activityType,
   };
 }
 
@@ -679,7 +791,15 @@ function walkJson(value, path, matches) {
   }
 }
 
-function buildFinding({ item, activityType, index, exampleLibrary, logFiles, manualRules }) {
+function buildFinding({
+  item,
+  activityType,
+  index,
+  exampleLibrary,
+  generatedExampleLibrary,
+  logFiles,
+  manualRules,
+}) {
   const normalizedCheckName = normalizeCheckName(item.checkName || "");
   const haystack = `${item.line} ${item.context} ${normalizedCheckName}`.toLowerCase();
   const matchedRule =
@@ -689,7 +809,7 @@ function buildFinding({ item, activityType, index, exampleLibrary, logFiles, man
   const ruleTemplate = getRuleTemplate(normalizedCheckName, manualRules);
   const exampleMatch = ruleTemplate
     ? null
-    : findRelevantExampleText(exampleLibrary, item, normalizedCheckName);
+    : findRelevantExampleText(exampleLibrary, generatedExampleLibrary, item, normalizedCheckName);
   const severity = matchedRule.severity ?? fallbackRule.severity;
   const impactSentence =
     matchedRule.impacts?.[activityType] ?? fallbackRule.genericImpact;
@@ -715,11 +835,23 @@ function buildFinding({ item, activityType, index, exampleLibrary, logFiles, man
     ),
     checkName: normalizedCheckName || matchedRule.title,
     source: `Line ${item.index}: ${item.line}`,
+    sourceText: buildCurrentFindingSourceText(item),
     context: item.context,
     feedback,
     impactSentence,
     logHint,
+    messageLines: item.messageLines || [item.line].filter(Boolean),
+    descriptionLines: item.descriptionLines || [],
+    commandHint: item.commandHint || "",
     trainingSource: exampleMatch?.label || "",
+    trainingScore: exampleMatch?.score || 0,
+    feedbackSourceType: ruleTemplate
+      ? ruleTemplate.source === "manual"
+        ? "manual-rule"
+        : "offline-rule"
+      : exampleMatch && feedback
+        ? "training-library"
+        : "none",
   };
 }
 
@@ -748,17 +880,38 @@ function findRelevantLogHint(logFiles, haystack) {
 }
 
 const TRAINING_LIBRARY_MATCH_THRESHOLD = 14;
+const TRAINING_LIBRARY_CONSENSUS_LIMIT = 5;
+const TRAINING_LIBRARY_CONSENSUS_FLOOR = 0.7;
+const GENERATED_FEEDBACK_WEIGHT = 0.35;
 
-function findRelevantExampleText(exampleLibrary, item, checkName) {
-  if (!exampleLibrary.length || !checkName) {
+function findRelevantExampleText(exampleLibrary, generatedExampleLibrary, item, checkName) {
+  if ((!exampleLibrary.length && !generatedExampleLibrary.length) || !checkName) {
     return null;
   }
 
   const normalizedCheckName = checkName.toLowerCase();
-  const exactCheckExamples = exampleLibrary.filter(
-    (example) =>
-      normalizeCheckName(example.checkName || "").toLowerCase() === normalizedCheckName,
-  );
+  const exactCheckExamples = [
+    ...exampleLibrary
+      .filter(
+        (example) =>
+          normalizeCheckName(example.checkName || "").toLowerCase() === normalizedCheckName,
+      )
+      .map((example) => ({
+        ...example,
+        librarySourceType: "human",
+        scoreWeight: 1,
+      })),
+    ...generatedExampleLibrary
+      .filter(
+        (example) =>
+          normalizeCheckName(example.checkName || "").toLowerCase() === normalizedCheckName,
+      )
+      .map((example) => ({
+        ...example,
+        librarySourceType: "generated",
+        scoreWeight: GENERATED_FEEDBACK_WEIGHT,
+      })),
+  ];
 
   if (!exactCheckExamples.length) {
     return null;
@@ -774,7 +927,7 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
   const currentBugIds = extractBugIdsFromText(currentSourceText);
   const currentCommandTokens = extractCommandTokensFromText(item.commandHint || "");
 
-  const bestMatch = exactCheckExamples
+  const rankedMatches = exactCheckExamples
     .map((example) => {
       const sourceText = buildTrainingLibrarySourceText(example);
       const feedbackText = String(example.manualFeedback || example.feedback || "")
@@ -807,13 +960,15 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
         label: `${example.deviceResultName || "training-result"} -> ${example.manualFeedbackName || "training-feedback"}`,
         templateText: String(example.manualFeedbackTemplate || "").trim(),
         feedbackText,
+        sourceText,
         feedbackVariables:
           example.manualFeedbackVariables &&
           typeof example.manualFeedbackVariables === "object"
             ? example.manualFeedbackVariables
             : {},
         exampleCommandHint: String(example.commandHint || "").trim(),
-        score:
+        librarySourceType: example.librarySourceType || "human",
+        rawScore:
           sourceScore * 3 +
           feedbackScore +
           interfaceScore * 8 +
@@ -823,13 +978,28 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
           classMapScore * 7 +
           bugScore * 10 +
           commandScore * 4,
+        scoreWeight: Number(example.scoreWeight || 1),
       };
     })
-    .sort((left, right) => right.score - left.score)[0];
+    .map((match) => ({
+      ...match,
+      score: match.rawScore * match.scoreWeight,
+    }))
+    .sort((left, right) => right.score - left.score);
+
+  const bestMatch = rankedMatches[0];
 
   if (!bestMatch || bestMatch.score < TRAINING_LIBRARY_MATCH_THRESHOLD) {
     return null;
   }
+
+  const consensusMatches = rankedMatches
+    .filter(
+      (match) =>
+        match.score >= TRAINING_LIBRARY_MATCH_THRESHOLD &&
+        match.score >= bestMatch.score * TRAINING_LIBRARY_CONSENSUS_FLOOR,
+    )
+    .slice(0, TRAINING_LIBRARY_CONSENSUS_LIMIT);
 
   return {
     templateText: bestMatch.templateText,
@@ -838,6 +1008,8 @@ function findRelevantExampleText(exampleLibrary, item, checkName) {
     exampleCommandHint: bestMatch.exampleCommandHint,
     label: bestMatch.label,
     score: bestMatch.score,
+    librarySourceType: bestMatch.librarySourceType,
+    consensusMatches,
   };
 }
 
@@ -939,8 +1111,8 @@ function extractActionClauseFromFeedback(text) {
 
 function normalizeActionClause(text) {
   return String(text || "")
-    .replace(/\bJPMC\b/gi, "Customer")
-    .replace(/^(?:Customer|Cisco|PE team|team)(?:\s+team)?\s+/i, "")
+    .replace(/\bJPME\b/gi, "JPMC")
+    .replace(/^(?:JPMC|Customer|Cisco|PE team|team)(?:\s+team)?\s+/i, "")
     .replace(/^(?:should|must)\s+/i, "")
     .replace(/^needs?\s+to\s+/i, "")
     .replace(/^need\s+to\s+/i, "")
@@ -2305,7 +2477,7 @@ function dedupe(values) {
 }
 
 function replaceCustomerName(text) {
-  return text.replace(/\bJPMC\b/g, "Customer");
+  return String(text || "").replace(/\bJPME\b/g, "JPMC");
 }
 
 function extractBugIdsFromText(text) {
@@ -2476,6 +2648,7 @@ function buildRecommendationLine(impactLevel, activityLabel) {
 }
 
 function renderAnalysis(analysis) {
+  latestAnalysis = analysis;
   failCountEl.textContent = String(analysis.minorCount);
   impactBadgeEl.textContent = String(analysis.majorCount);
   showStopperCountEl.textContent = String(analysis.showStopperCount);
@@ -2487,6 +2660,38 @@ function renderAnalysis(analysis) {
   majorOutputTextInput.value = analysis.output.major;
   missedChecksTextInput.value = analysis.output.missed;
   downloadButton.disabled = !buildDownloadContent().trim();
+}
+
+function buildGeneratedFeedbackExamples(analysis) {
+  if (!analysis?.findings?.length) {
+    return [];
+  }
+
+  return analysis.findings
+    .filter(
+      (finding) =>
+        finding.feedbackSourceType === "training-library" &&
+        finding.checkName &&
+        finding.feedback &&
+        finding.sourceText,
+    )
+    .map((finding) => ({
+      checkName: finding.checkName,
+      manualFeedback: finding.feedback,
+      manualFeedbackTemplate: "",
+      manualFeedbackVariables: {},
+      sourceText: finding.sourceText,
+      messageLines: finding.messageLines || [],
+      descriptionLines: finding.descriptionLines || [],
+      commandHint: finding.commandHint || "",
+      deviceResultName: analysis.reportName || "runtime-final-report",
+      manualFeedbackName: "downloaded-generated-feedback.txt",
+      hostname: analysis.hostname || currentDownloadHostname || "",
+      activityType: analysis.activityType || activityTypeInput.value || "",
+      generatedAt: new Date().toISOString(),
+      generatedFrom: "download-feedback",
+      sourceLabel: finding.trainingSource || "",
+    }));
 }
 
 function buildDownloadContent() {

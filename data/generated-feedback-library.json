@@ -1,0 +1,53 @@
+{
+  "savedAt": "2026-04-16T14:38:49.492Z",
+  "notes": "",
+  "examples": [
+    {
+      "checkName": "checkPimNeighbors",
+      "manualFeedback": "Observed interfaces do not have any neighbor. Customer team to validate it on their end.",
+      "manualFeedbackTemplate": "",
+      "manualFeedbackVariables": {},
+      "sourceText": "Check: checkPimNeighbors\nInterface Ethernet3/20 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/30 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/29 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/30 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet1/1.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet1/2.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet2/1.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet2/2.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/10.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/11.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/12.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/13.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/14.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/15.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/16.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/17.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/10.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/11.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/12.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/13.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/14.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/15.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/16.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/17.300 for vrf VRF_TIER3 does not have any neighbor\nDescription: Check that all PIM-enabled interface have at least one neighbor | The check uses the output of the `show ip pim interface` command\nCommand: show ip pim interface vrf all",
+      "messageLines": [
+        "Interface Ethernet3/20 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/30 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/29 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/30 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet1/1.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet1/2.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet2/1.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet2/2.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/10.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/11.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/12.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/13.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/14.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/15.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/16.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/17.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/10.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/11.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/12.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/13.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/14.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/15.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/16.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/17.300 for vrf VRF_TIER3 does not have any neighbor"
+      ],
+      "descriptionLines": [
+        "Check that all PIM-enabled interface have at least one neighbor",
+        "The check uses the output of the `show ip pim interface` command"
+      ],
+      "commandHint": "show ip pim interface vrf all",
+      "deviceResultName": "9fe967_D133315R781_final_report.txt",
+      "manualFeedbackName": "downloaded-generated-feedback.txt",
+      "hostname": "D133315R781",
+      "activityType": "code-upgrade",
+      "generatedAt": "2026-04-16T14:38:49.482Z",
+      "sourceType": "generated",
+      "generatedFrom": "download-feedback",
+      "sourceLabel": "f5080b_D133331R781_final_report.txt -> pasted-manual-feedback.txt"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ const APP_BASE_PATH = normalizeBasePath(process.env.APP_BASE_PATH || "");
 const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(ROOT_DIR, "data"));
 const REVIEW_ARCHIVE_DIR = path.join(DATA_DIR, "review-archives");
 const TRAINING_FILE = path.join(DATA_DIR, "training-library.json");
+const GENERATED_FEEDBACK_FILE = path.join(DATA_DIR, "generated-feedback-library.json");
 const MANUAL_RULES_FILE = path.join(DATA_DIR, "manual-rules.json");
 const MAX_REVIEW_ARCHIVES = 20;
 
@@ -39,6 +40,11 @@ const server = http.createServer(async (request, response) => {
 
     if (appPathname === "/api/manual-rules") {
       await handleManualRules(request, response);
+      return;
+    }
+
+    if (appPathname === "/api/generated-feedback-library") {
+      await handleGeneratedFeedbackLibrary(request, response);
       return;
     }
 
@@ -214,6 +220,60 @@ async function handleManualRules(request, response) {
   response.end(JSON.stringify({ error: "Method not allowed" }));
 }
 
+async function handleGeneratedFeedbackLibrary(request, response) {
+  if (request.method === "GET") {
+    const payload = await readGeneratedFeedbackLibrary();
+    response.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    response.end(JSON.stringify(payload));
+    return;
+  }
+
+  if (request.method === "POST") {
+    const body = await readRequestBody(request);
+    const parsed = JSON.parse(body || "{}");
+    const existing = await readGeneratedFeedbackLibrary();
+    const incomingExamples = Array.isArray(parsed.examples) ? parsed.examples : [];
+    const examplesByKey = new Map();
+
+    existing.examples.forEach((example) => {
+      examplesByKey.set(buildGeneratedFeedbackKey(example), example);
+    });
+
+    incomingExamples.forEach((example) => {
+      const normalized = normalizeGeneratedFeedbackExample(example);
+      if (!normalized) {
+        return;
+      }
+
+      examplesByKey.set(buildGeneratedFeedbackKey(normalized), normalized);
+    });
+
+    const payload = {
+      savedAt: new Date().toISOString(),
+      notes: parsed.notes || existing.notes || "",
+      examples: [...examplesByKey.values()].sort((left, right) =>
+        String(right.generatedAt || right.savedAt || "").localeCompare(
+          String(left.generatedAt || left.savedAt || ""),
+        ),
+      ),
+    };
+
+    await fs.promises.mkdir(DATA_DIR, { recursive: true });
+    await fs.promises.writeFile(
+      GENERATED_FEEDBACK_FILE,
+      JSON.stringify(payload, null, 2),
+      "utf8",
+    );
+
+    response.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    response.end(JSON.stringify({ ok: true, count: payload.examples.length }));
+    return;
+  }
+
+  response.writeHead(405, { "Content-Type": "application/json; charset=utf-8" });
+  response.end(JSON.stringify({ error: "Method not allowed" }));
+}
+
 async function readManualRules() {
   try {
     const raw = await fs.promises.readFile(MANUAL_RULES_FILE, "utf8");
@@ -227,6 +287,24 @@ async function readManualRules() {
     return {
       savedAt: null,
       rules: [],
+    };
+  }
+}
+
+async function readGeneratedFeedbackLibrary() {
+  try {
+    const raw = await fs.promises.readFile(GENERATED_FEEDBACK_FILE, "utf8");
+    const parsed = JSON.parse(raw);
+    return {
+      savedAt: parsed.savedAt || null,
+      notes: parsed.notes || "",
+      examples: Array.isArray(parsed.examples) ? parsed.examples : [],
+    };
+  } catch {
+    return {
+      savedAt: null,
+      notes: "",
+      examples: [],
     };
   }
 }
@@ -384,7 +462,68 @@ function normalizeArchiveRelativePath(value) {
 }
 
 function isFinalReportPath(value) {
-  return /(?:^|[\\/])RESULTS[\\/].+_final_report\.(txt|json)$/i.test(String(value || ""));
+  return (
+    /(?:^|[\\/])RESULTS[\\/].+_final_report\.(txt|json)$/i.test(String(value || "")) ||
+    isDirectFinalReportPath(value)
+  );
+}
+
+function isDirectFinalReportPath(value) {
+  const normalized = String(value || "").replace(/\\/g, "/").replace(/^\/+/, "");
+  const segments = normalized.split("/").filter(Boolean);
+
+  return (
+    segments.length === 2 &&
+    /_final_report\.(txt|json)$/i.test(segments[1]) &&
+    !/^RESULTS$/i.test(segments[0]) &&
+    !/^LOGS$/i.test(segments[0])
+  );
+}
+
+function buildGeneratedFeedbackKey(example) {
+  return [
+    normalizeCheckNameForStorage(example.checkName || ""),
+    String(example.sourceText || "").trim().toLowerCase(),
+    String(example.manualFeedback || example.feedback || "").trim().toLowerCase(),
+  ].join("::");
+}
+
+function normalizeGeneratedFeedbackExample(example) {
+  const checkName = String(example?.checkName || "").trim();
+  const manualFeedback = String(example?.manualFeedback || example?.feedback || "").trim();
+  const sourceText = String(example?.sourceText || "").trim();
+
+  if (!checkName || !manualFeedback || !sourceText) {
+    return null;
+  }
+
+  return {
+    checkName,
+    manualFeedback,
+    manualFeedbackTemplate: String(example?.manualFeedbackTemplate || "").trim(),
+    manualFeedbackVariables:
+      example?.manualFeedbackVariables && typeof example.manualFeedbackVariables === "object"
+        ? example.manualFeedbackVariables
+        : {},
+    sourceText,
+    messageLines: Array.isArray(example?.messageLines) ? example.messageLines : [],
+    descriptionLines: Array.isArray(example?.descriptionLines) ? example.descriptionLines : [],
+    commandHint: String(example?.commandHint || "").trim(),
+    deviceResultName: String(example?.deviceResultName || "").trim(),
+    manualFeedbackName: String(example?.manualFeedbackName || "").trim(),
+    hostname: String(example?.hostname || "").trim(),
+    activityType: String(example?.activityType || "").trim(),
+    generatedAt: String(example?.generatedAt || new Date().toISOString()),
+    sourceType: "generated",
+    generatedFrom: String(example?.generatedFrom || "download-feedback").trim(),
+    sourceLabel: String(example?.sourceLabel || "").trim(),
+  };
+}
+
+function normalizeCheckNameForStorage(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase();
 }
 
 function normalizePathname(value) {

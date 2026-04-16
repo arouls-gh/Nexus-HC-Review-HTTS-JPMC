@@ -1,5 +1,5 @@
 {
-  "savedAt": "2026-04-15T15:41:45.490Z",
+  "savedAt": "2026-04-16T07:07:28.781Z",
   "notes": "",
   "examples": [
     {
@@ -3587,6 +3587,923 @@
       "manualFeedbackName": "pasted-manual-feedback.txt",
       "confidenceLabel": "medium",
       "confidenceScore": 94,
+      "mappingMethod": "reviewed-auto-map"
+    },
+    {
+      "id": "1776322653988-c337eh7i",
+      "type": "check-level-example",
+      "hostname": "D133334-F02LF117",
+      "checkName": "checkFeature",
+      "line": "Feature vpc is configured but not in expected feature list",
+      "context": "Feature vpc is configured but not in expected feature list",
+      "messageLines": [
+        "Feature vpc is configured but not in expected feature list"
+      ],
+      "descriptionLines": [
+        "Check if the required features are configured on the device also if unneeded features are",
+        "enabled for that device role"
+      ],
+      "commandHint": "show feature | xml",
+      "deviceResult": "Check: checkFeature\nFeature vpc is configured but not in expected feature list\nDescription: Check if the required features are configured on the device also if unneeded features are | enabled for that device role\nCommand: show feature | xml",
+      "sourceText": "Check: checkFeature\nFeature vpc is configured but not in expected feature list\nDescription: Check if the required features are configured on the device also if unneeded features are | enabled for that device role\nCommand: show feature | xml",
+      "deviceResultName": "a726ed_D133334-F02LF117_final_report.txt",
+      "manualFeedback": "Feature vpc is configured but not in expected feature list - JPMC team to validate it on their end.",
+      "manualFeedbackTemplate": "Feature vpc is configured but not in expected feature list - JPMC team to validate it on their end.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133334-F02LF117",
+        "checkName": "checkFeature",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 111,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776322653988-wzmgwbjg",
+      "type": "check-level-example",
+      "hostname": "D133334-F02LF117",
+      "checkName": "checkLacpTimer",
+      "line": "Interface Ethernet1/5 has mismatched LACP timers",
+      "context": "Interface Ethernet1/5 has mismatched LACP timers | Interface Ethernet1/6 has mismatched LACP timers",
+      "messageLines": [
+        "Interface Ethernet1/5 has mismatched LACP timers",
+        "Interface Ethernet1/6 has mismatched LACP timers"
+      ],
+      "descriptionLines": [
+        "Check if the device interfaces have LACP timers set to the same as the LACP neighbor using `show",
+        "lacp interface` command",
+        "Same output for N9K/N7K/N5K"
+      ],
+      "commandHint": "show lacp interface | xml",
+      "deviceResult": "Check: checkLacpTimer\nInterface Ethernet1/5 has mismatched LACP timers\nInterface Ethernet1/6 has mismatched LACP timers\nDescription: Check if the device interfaces have LACP timers set to the same as the LACP neighbor using `show | lacp interface` command | Same output for N9K/N7K/N5K\nCommand: show lacp interface | xml",
+      "sourceText": "Check: checkLacpTimer\nInterface Ethernet1/5 has mismatched LACP timers\nInterface Ethernet1/6 has mismatched LACP timers\nDescription: Check if the device interfaces have LACP timers set to the same as the LACP neighbor using `show | lacp interface` command | Same output for N9K/N7K/N5K\nCommand: show lacp interface | xml",
+      "deviceResultName": "a726ed_D133334-F02LF117_final_report.txt",
+      "manualFeedback": "Interface Ethernet1/5-6 has mismatched LACP timers - JPMC needs to check LACP timers is same as the LACP neighbor using show lacp interface` command",
+      "manualFeedbackTemplate": "Interface {{interfaces}}-6 has mismatched LACP timers - JPMC needs to check LACP timers is same as the LACP neighbor using show lacp interface` command",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133334-F02LF117",
+        "checkName": "checkLacpTimer",
+        "interfaces": [
+          "Ethernet1/5"
+        ],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "lacp",
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 153,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776322653989-7bzgtd0i",
+      "type": "check-level-example",
+      "hostname": "D133334-F02LF117",
+      "checkName": "checkSmuCSCvz65993",
+      "line": "SMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on",
+      "context": "SMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on | boot. Kernel messages may have rolled over, causing activation messaging to be missing from the | output. Contact Cisco to investigate further and confirm if the SMU was not properly loaded on boot. | Manual check: | config ; feature bash ; end | run bash cat /mnt/pss/bootlogs/current/dmesg | config ; no feature bash ; end ; copy run start",
+      "messageLines": [
+        "SMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on",
+        "boot. Kernel messages may have rolled over, causing activation messaging to be missing from the",
+        "output. Contact Cisco to investigate further and confirm if the SMU was not properly loaded on boot.",
+        "Manual check:",
+        "config ; feature bash ; end",
+        "run bash cat /mnt/pss/bootlogs/current/dmesg",
+        "config ; no feature bash ; end ; copy run start"
+      ],
+      "descriptionLines": [
+        "Check if CSCvz65993 is committed by checking Kernel messages"
+      ],
+      "commandHint": "show install active | grep, CSCvz65993,show system internal kernel, messages | grep CSCvz65993,  | ",
+      "deviceResult": "Check: checkSmuCSCvz65993\nSMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on\nboot. Kernel messages may have rolled over, causing activation messaging to be missing from the\noutput. Contact Cisco to investigate further and confirm if the SMU was not properly loaded on boot.\nManual check:\nconfig ; feature bash ; end\nrun bash cat /mnt/pss/bootlogs/current/dmesg\nconfig ; no feature bash ; end ; copy run start\nDescription: Check if CSCvz65993 is committed by checking Kernel messages\nCommand: show install active | grep, CSCvz65993,show system internal kernel, messages | grep CSCvz65993,  | ",
+      "sourceText": "Check: checkSmuCSCvz65993\nSMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on\nboot. Kernel messages may have rolled over, causing activation messaging to be missing from the\noutput. Contact Cisco to investigate further and confirm if the SMU was not properly loaded on boot.\nManual check:\nconfig ; feature bash ; end\nrun bash cat /mnt/pss/bootlogs/current/dmesg\nconfig ; no feature bash ; end ; copy run start\nDescription: Check if CSCvz65993 is committed by checking Kernel messages\nCommand: show install active | grep, CSCvz65993,show system internal kernel, messages | grep CSCvz65993,  | ",
+      "deviceResultName": "a726ed_D133334-F02LF117_final_report.txt",
+      "manualFeedback": "SMU for defect CSCvz65993 has been installed but could not be confirmed to have properly loaded on boot. Kernel messages may have rolled over, causing activation messaging to be missing from the output.- CSCvz65993 fixed in 9.3(14) so upgrade will fix it.",
+      "manualFeedbackTemplate": "SMU for defect {{bug_ids}} has been installed but could not be confirmed to have properly loaded on boot. Kernel messages may have rolled over, causing activation messaging to be missing from the output.- {{bug_ids}} fixed in 9.3(14) so upgrade will fix it.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133334-F02LF117",
+        "checkName": "checkSmuCSCvz65993",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [
+          "CSCvz65993"
+        ],
+        "commandTokens": [
+          "show",
+          "grep"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 237,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776322653989-veq23e1s",
+      "type": "check-level-example",
+      "hostname": "D133334-F02LF117",
+      "checkName": "checkCoppPolicyMap",
+      "line": "Class Mapp copp-system-p-class-normal-igmp has 467922 violate bytes",
+      "context": "Class Mapp copp-system-p-class-normal-igmp has 467922 violate bytes | Class Mapp copp-system-p-class-undesirable has 63484 violate bytes",
+      "messageLines": [
+        "Class Mapp copp-system-p-class-normal-igmp has 467922 violate bytes",
+        "Class Mapp copp-system-p-class-undesirable has 63484 violate bytes"
+      ],
+      "descriptionLines": [
+        "Check if there are packets labeled as violated or dropped in any of the class-maps",
+        "The check uses the output of the `show policy-map interface control-plane` command"
+      ],
+      "commandHint": "show policy-map interface control-plane,  | xml",
+      "deviceResult": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-normal-igmp has 467922 violate bytes\nClass Mapp copp-system-p-class-undesirable has 63484 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "sourceText": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-normal-igmp has 467922 violate bytes\nClass Mapp copp-system-p-class-undesirable has 63484 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "deviceResultName": "a726ed_D133334-F02LF117_final_report.txt",
+      "manualFeedback": "Below Copp drop has been observed and it could be historical- JPMC team to check if these are incrementing.\ncopp-system-p-class-undesirable, copp-system-p-class-normal-igmp",
+      "manualFeedbackTemplate": "Below {{class_maps}} drop has been observed and it could be historical- JPMC team to check if these are incrementing.\n{{class_maps}}, {{class_maps}}",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133334-F02LF117",
+        "checkName": "checkCoppPolicyMap",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [
+          "Copp",
+          "copp-system-p-class-undesirable",
+          "copp-system-p-class-normal-igmp"
+        ],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 135,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776322653989-y14g4014",
+      "type": "check-level-example",
+      "hostname": "D133334-F02LF117",
+      "checkName": "checkSsdFirmware",
+      "line": "SSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact",
+      "context": "SSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact | of known defect CSCwi53829",
+      "messageLines": [
+        "SSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact",
+        "of known defect CSCwi53829"
+      ],
+      "descriptionLines": [
+        "Check if device SSD firmware is running a specific version to avoid known defects. If device is",
+        "not a N9k or not equipped with a SSD listed below, the check will be skipped.",
+        "- M500IT must be running firmware higher than MU01.00 or MC02.00 (CSCvx21260)",
+        "- M5300 must be running firmware D3CN001 (CSCwi53829)",
+        "- M5100 must be running firmware higher than D0MU075 (CSCvs79768/CSCwi53829)",
+        "The check uses the output of the `show hardware internal bootflash log` command."
+      ],
+      "commandHint": "show hardware internal bootflash log",
+      "deviceResult": "Check: checkSsdFirmware\nSSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact\nof known defect CSCwi53829\nDescription: Check if device SSD firmware is running a specific version to avoid known defects. If device is | not a N9k or not equipped with a SSD listed below, the check will be skipped. | - M500IT must be running firmware higher than MU01.00 or MC02.00 (CSCvx21260) | - M5300 must be running firmware D3CN001 (CSCwi53829) | - M5100 must be running firmware higher than D0MU075 (CSCvs79768/CSCwi53829) | The check uses the output of the `show hardware internal bootflash log` command.\nCommand: show hardware internal bootflash log",
+      "sourceText": "Check: checkSsdFirmware\nSSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact\nof known defect CSCwi53829\nDescription: Check if device SSD firmware is running a specific version to avoid known defects. If device is | not a N9k or not equipped with a SSD listed below, the check will be skipped. | - M500IT must be running firmware higher than MU01.00 or MC02.00 (CSCvx21260) | - M5300 must be running firmware D3CN001 (CSCwi53829) | - M5100 must be running firmware higher than D0MU075 (CSCvs79768/CSCwi53829) | The check uses the output of the `show hardware internal bootflash log` command.\nCommand: show hardware internal bootflash log",
+      "deviceResultName": "a726ed_D133334-F02LF117_final_report.txt",
+      "manualFeedback": "SSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact of known defect CSCwi53829.- JPMC need to validate if switch is allowing to save the config. If yes no action needed. If not able to save the config then please check with JPMC PE team for bug recommendations.",
+      "manualFeedbackTemplate": "SSD Micron_5300_MTFDDAV240TDS is running firmware D3CN000 and needed to be upgrade to prevent impact of known defect {{bug_ids}}.- JPMC need to validate if switch is allowing to save the config. If yes no action needed. If not able to save the config then please check with JPMC PE team for bug recommendations.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133334-F02LF117",
+        "checkName": "checkSsdFirmware",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [
+          "CSCwi53829"
+        ],
+        "commandTokens": [
+          "show",
+          "bootflash"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 133,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248723-7w1rd057",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkBgpNeighborsStatus",
+      "line": "Neighbor 169.21.87.237 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3",
+      "context": "Neighbor 169.21.87.237 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3 | Neighbor 169.21.87.241 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3 | Neighbor 169.21.87.245 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3 | Neighbor 169.21.87.249 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3 | Sub-Address Family IPv6 Unicast1 in VRF VRF_TIER3 does not have any neighbor | Sub-Address Family IPv4 Unicast1 in VRF default does not have any neighbor | Sub-Address Family IPv6 Unicast1 in VRF default does not have any neighbor",
+      "messageLines": [
+        "Neighbor 169.21.87.237 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3",
+        "Neighbor 169.21.87.241 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3",
+        "Neighbor 169.21.87.245 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3",
+        "Neighbor 169.21.87.249 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3",
+        "Sub-Address Family IPv6 Unicast1 in VRF VRF_TIER3 does not have any neighbor",
+        "Sub-Address Family IPv4 Unicast1 in VRF default does not have any neighbor",
+        "Sub-Address Family IPv6 Unicast1 in VRF default does not have any neighbor"
+      ],
+      "descriptionLines": [
+        "Check if the BGP sessions (in all the VRFs) are Established for all the BGP address families",
+        "The check uses the output of the `show bgp vrf all all summary` command",
+        "Same output for N9K/N7K"
+      ],
+      "commandHint": "show bgp vrf all all summary | xml",
+      "deviceResult": "Check: checkBgpNeighborsStatus\nNeighbor 169.21.87.237 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.241 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.245 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.249 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nSub-Address Family IPv6 Unicast1 in VRF VRF_TIER3 does not have any neighbor\nSub-Address Family IPv4 Unicast1 in VRF default does not have any neighbor\nSub-Address Family IPv6 Unicast1 in VRF default does not have any neighbor\nDescription: Check if the BGP sessions (in all the VRFs) are Established for all the BGP address families | The check uses the output of the `show bgp vrf all all summary` command | Same output for N9K/N7K\nCommand: show bgp vrf all all summary | xml",
+      "sourceText": "Check: checkBgpNeighborsStatus\nNeighbor 169.21.87.237 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.241 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.245 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.249 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nSub-Address Family IPv6 Unicast1 in VRF VRF_TIER3 does not have any neighbor\nSub-Address Family IPv4 Unicast1 in VRF default does not have any neighbor\nSub-Address Family IPv6 Unicast1 in VRF default does not have any neighbor\nDescription: Check if the BGP sessions (in all the VRFs) are Established for all the BGP address families | The check uses the output of the `show bgp vrf all all summary` command | Same output for N9K/N7K\nCommand: show bgp vrf all all summary | xml",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "BGP (Border Gateway Protocol) address families within specific VRFs do have neighbors in idle state – JPMC needs to ensure that BGP neighbors are properly set up for these address families in the respective VRFs.\nNeighbor 10.153.58.144 (ASN 64660) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.239 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.243 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.247 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nNeighbor 169.21.87.251 (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf VRF_TIER3\nSub-Address Family IPv6 Unicast1 in VRF VRF_TIER3 does not have any neighbor\nSub-Address Family IPv4 Unicast1 in VRF default does not have any neighbor\nSub-Address Family IPv6 Unicast1 in VRF default does not have any neighbor",
+      "manualFeedbackTemplate": "BGP (Border Gateway Protocol) address families within specific VRFs do have neighbors in idle state – JPMC needs to ensure that BGP neighbors are properly set up for these address families in the respective VRFs.\nNeighbor {{neighbor_ips}} (ASN 64660) (AF IPv4 Unicast1) is on state Idle in vrf {{vrfs}}\nNeighbor {{neighbor_ips}} (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf {{vrfs}}\nNeighbor {{neighbor_ips}} (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf {{vrfs}}\nNeighbor {{neighbor_ips}} (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf {{vrfs}}\nNeighbor {{neighbor_ips}} (ASN 65102) (AF IPv4 Unicast1) is on state Idle in vrf {{vrfs}}\nSub-Address Family IPv6 Unicast1 in VRF {{vrfs}} does not have any neighbor\nSub-Address Family IPv4 Unicast1 in VRF {{vrfs}} does not have any neighbor\nSub-Address Family IPv6 Unicast1 in VRF {{vrfs}} does not have any neighbor",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkBgpNeighborsStatus",
+        "interfaces": [],
+        "vrfs": [
+          "VRF_TIER3",
+          "default"
+        ],
+        "neighborIps": [
+          "10.153.58.144",
+          "169.21.87.239",
+          "169.21.87.243",
+          "169.21.87.247",
+          "169.21.87.251"
+        ],
+        "ipAddresses": [
+          "10.153.58.144",
+          "169.21.87.239",
+          "169.21.87.243",
+          "169.21.87.247",
+          "169.21.87.251"
+        ],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "bgp",
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 216,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248723-9shphybk",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkAdvertisedRoutesBgpPeer",
+      "line": "No neighbors found in VRF VRF_TIER3 with peer regex .*P_RED_PLANE_CORE.*",
+      "context": "No neighbors found in VRF VRF_TIER3 with peer regex .*P_RED_PLANE_CORE.* | No neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_CORE.* | Neighbor 147.107.219.20 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000] | Neighbor 147.107.219.104 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000] | Neighbor 147.107.219.210 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000] | Neighbor 147.107.219.232 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000] | No neighbors found in VRF VRF_TIER3 with peer regex .*P_DCBB_REPLICATION.* | No neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_HST.* | No neighbors found in VRF VRF_TIER3 with peer regex .*P_PAL.* | No neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*",
+      "messageLines": [
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_RED_PLANE_CORE.*",
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_CORE.*",
+        "Neighbor 147.107.219.20 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 147.107.219.104 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 147.107.219.210 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]",
+        "Neighbor 147.107.219.232 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]",
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_DCBB_REPLICATION.*",
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_HST.*",
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_PAL.*",
+        "No neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*"
+      ],
+      "descriptionLines": [
+        "Check that the number of advertised prefixes per VRF and per neighbor stays within a range",
+        "Check uses the outut fo the command `show bgp vrf all all neighbors`"
+      ],
+      "commandHint": "",
+      "deviceResult": "Check: checkAdvertisedRoutesBgpPeer\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_RED_PLANE_CORE.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_CORE.*\nNeighbor 147.107.219.20 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.104 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.210 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.232 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_DCBB_REPLICATION.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_HST.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_PAL.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*\nDescription: Check that the number of advertised prefixes per VRF and per neighbor stays within a range | Check uses the outut fo the command `show bgp vrf all all neighbors`",
+      "sourceText": "Check: checkAdvertisedRoutesBgpPeer\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_RED_PLANE_CORE.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_CORE.*\nNeighbor 147.107.219.20 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.104 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.210 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.232 (.*P_DCBB.*) advertises 4305 prefixes. Valid range is [79617 - 95000]\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_DCBB_REPLICATION.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_BLUE_PLANE_HST.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_PAL.*\nNo neighbors found in VRF VRF_TIER3 with peer regex .*P_INT_AGG.*\nDescription: Check that the number of advertised prefixes per VRF and per neighbor stays within a range | Check uses the outut fo the command `show bgp vrf all all neighbors`",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Please validate if all the prefixes coming from these neighbours is properly installed in your routing and bgp table.\nNo neighbors found in VRF VRF_TIER3 with peer regex .P_RED_PLANE_CORE.\nNo neighbors found in VRF VRF_TIER3 with peer regex .P_BLUE_PLANE_CORE.\nNeighbor 147.107.219.30 (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.102 (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.220 (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNeighbor 147.107.219.230 (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNo neighbors found in VRF VRF_TIER3 with peer regex .P_DCBB_REPLICATION.\nNo neighbors found in VRF VRF_TIER3 with peer regex .P_BLUE_PLANE_HST.\nNo neighbors found in VRF VRF_TIER3 with peer regex .P_PAL.\nNo neighbors found in VRF VRF_TIER3 with peer regex .P_INT_AGG.c",
+      "manualFeedbackTemplate": "Please validate if all the prefixes coming from these neighbours is properly installed in your routing and bgp table.\nNo neighbors found in VRF {{vrfs}} with peer regex .P_RED_PLANE_CORE.\nNo neighbors found in VRF {{vrfs}} with peer regex .P_BLUE_PLANE_CORE.\nNeighbor {{neighbor_ips}} (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNeighbor {{neighbor_ips}} (.P_DCBB.) advertises 3709 prefixes. Valid range is [79617 - 95000]\nNo neighbors found in VRF {{vrfs}} with peer regex .P_DCBB_REPLICATION.\nNo neighbors found in VRF {{vrfs}} with peer regex .P_BLUE_PLANE_HST.\nNo neighbors found in VRF {{vrfs}} with peer regex .P_PAL.\nNo neighbors found in VRF {{vrfs}} with peer regex .P_INT_AGG.c",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkAdvertisedRoutesBgpPeer",
+        "interfaces": [],
+        "vrfs": [
+          "VRF_TIER3"
+        ],
+        "neighborIps": [
+          "147.107.219.30",
+          "147.107.219.102",
+          "147.107.219.220",
+          "147.107.219.230"
+        ],
+        "ipAddresses": [
+          "147.107.219.30",
+          "147.107.219.102",
+          "147.107.219.220",
+          "147.107.219.230"
+        ],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "bgp"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 224,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248723-px5cr6cp",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkFeature",
+      "line": "Feature dhcp is configured but not in expected feature list",
+      "context": "Feature dhcp is configured but not in expected feature list | Feature netflow is not enabled on switch but is in expected feature list",
+      "messageLines": [
+        "Feature dhcp is configured but not in expected feature list",
+        "Feature netflow is not enabled on switch but is in expected feature list"
+      ],
+      "descriptionLines": [
+        "Check if the required features are configured on the device also if unneeded features are",
+        "enabled for that device role"
+      ],
+      "commandHint": "show feature | xml",
+      "deviceResult": "Check: checkFeature\nFeature dhcp is configured but not in expected feature list\nFeature netflow is not enabled on switch but is in expected feature list\nDescription: Check if the required features are configured on the device also if unneeded features are | enabled for that device role\nCommand: show feature | xml",
+      "sourceText": "Check: checkFeature\nFeature dhcp is configured but not in expected feature list\nFeature netflow is not enabled on switch but is in expected feature list\nDescription: Check if the required features are configured on the device also if unneeded features are | enabled for that device role\nCommand: show feature | xml",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Features dhcp and netflow are configured but not in expected feature list - JPMC to check whether it's required features are configured on the device or not.",
+      "manualFeedbackTemplate": "Features dhcp and netflow are configured but not in expected feature list - JPMC to check whether it's required features are configured on the device or not.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkFeature",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 134,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248723-qz9mx1fp",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkSmuOrder",
+      "line": "Found committed SMU list order doesn't match expected SMU install order",
+      "context": "Found committed SMU list order doesn't match expected SMU install order | Found committed SMU list order: | - nxos.CSCvz41769-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz93622-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvx75912-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvy95696-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz39860-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz65993-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz72442-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz80191-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwa25377-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwb70210-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwa17807-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwd00653-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz35190-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwc21224-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz52812_core-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz52812_vman-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | Expected committed SMU list order: | - nxos.CSCvz39860-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz41769-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvx75912-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz72442-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz80191-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvz65993-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwb70210-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwd00653-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCwc21224-n9k_ALL-1.0.0-9.3.8.lib32_n9000 | - nxos.CSCvs79768-n9k_ALL-1.0.0-9.3.10.lib32_n9000",
+      "messageLines": [
+        "Found committed SMU list order doesn't match expected SMU install order",
+        "Found committed SMU list order:",
+        "- nxos.CSCvz41769-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz93622-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvx75912-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvy95696-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz39860-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz65993-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz72442-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz80191-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCwa25377-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCwb70210-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCwa17807-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCwd00653-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz35190-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCwc21224-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz52812_core-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "- nxos.CSCvz52812_vman-n9k_ALL-1.0.0-9.3.8.lib32_n9000",
+        "Expected committed SMU list order:",
+        "- nxos.CSCvs79768-n9k_ALL-1.0.0-9.3.10.lib32_n9000"
+      ],
+      "descriptionLines": [
+        "Check if list of installed SMUs are in the correct order on the device. Order is derived from",
+        "the SMU list in the checks file.",
+        "Note: Check is specific to N9k platforms, and will not work on N7k or N5k platforms."
+      ],
+      "commandHint": "show file bootflash:.rpmstore/patching/p, atchrepo/meta/patching_meta.inf",
+      "deviceResult": "Check: checkSmuOrder\nFound committed SMU list order doesn't match expected SMU install order\nFound committed SMU list order:\n- nxos.CSCvz41769-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz93622-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvx75912-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvy95696-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz39860-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz65993-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz72442-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz80191-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwa25377-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwb70210-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwa17807-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwd00653-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz35190-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwc21224-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz52812_core-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz52812_vman-n9k_ALL-1.0.0-9.3.8.lib32_n9000\nExpected committed SMU list order:\n- nxos.CSCvs79768-n9k_ALL-1.0.0-9.3.10.lib32_n9000\nDescription: Check if list of installed SMUs are in the correct order on the device. Order is derived from | the SMU list in the checks file. | Note: Check is specific to N9k platforms, and will not work on N7k or N5k platforms.\nCommand: show file bootflash:.rpmstore/patching/p, atchrepo/meta/patching_meta.inf",
+      "sourceText": "Check: checkSmuOrder\nFound committed SMU list order doesn't match expected SMU install order\nFound committed SMU list order:\n- nxos.CSCvz41769-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz93622-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvx75912-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvy95696-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz39860-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz65993-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz72442-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz80191-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwa25377-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwb70210-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwa17807-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwd00653-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz35190-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCwc21224-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz52812_core-n9k_ALL-1.0.0-9.3.8.lib32_n9000\n- nxos.CSCvz52812_vman-n9k_ALL-1.0.0-9.3.8.lib32_n9000\nExpected committed SMU list order:\n- nxos.CSCvs79768-n9k_ALL-1.0.0-9.3.10.lib32_n9000\nDescription: Check if list of installed SMUs are in the correct order on the device. Order is derived from | the SMU list in the checks file. | Note: Check is specific to N9k platforms, and will not work on N7k or N5k platforms.\nCommand: show file bootflash:.rpmstore/patching/p, atchrepo/meta/patching_meta.inf",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Multiple SMU is present on the device but not in the expected list, and the committed SMU list does not match the expected installation order – Please validate from your end.",
+      "manualFeedbackTemplate": "Multiple SMU is present on the device but not in the expected list, and the committed SMU list does not match the expected installation order – Please validate from your end.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkSmuOrder",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [
+          "CSCvz41769",
+          "CSCvz93622",
+          "CSCvx75912",
+          "CSCvy95696",
+          "CSCvz39860",
+          "CSCvz65993",
+          "CSCvz72442",
+          "CSCvz80191",
+          "CSCwa25377",
+          "CSCwb70210",
+          "CSCwa17807",
+          "CSCwd00653",
+          "CSCvz35190",
+          "CSCwc21224",
+          "CSCvs79768"
+        ],
+        "commandTokens": [
+          "show",
+          "bootflash"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 131,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248723-sknndpkr",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkBiosGolden",
+      "line": "Node is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43",
+      "context": "Node is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43",
+      "messageLines": [
+        "Node is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43"
+      ],
+      "descriptionLines": [
+        "Check if the device's golden bios version matches the version specified",
+        "The check uses the output of the `show hardware internal dev-version` command",
+        "Same output for N9K/N7K. Command does not work on N5K"
+      ],
+      "commandHint": "show hardware internal dev-version | , grep Alternate",
+      "deviceResult": "Check: checkBiosGolden\nNode is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43\nDescription: Check if the device's golden bios version matches the version specified | The check uses the output of the `show hardware internal dev-version` command | Same output for N9K/N7K. Command does not work on N5K\nCommand: show hardware internal dev-version | , grep Alternate",
+      "sourceText": "Check: checkBiosGolden\nNode is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43\nDescription: Check if the device's golden bios version matches the version specified | The check uses the output of the `show hardware internal dev-version` command | Same output for N9K/N7K. Command does not work on N5K\nCommand: show hardware internal dev-version | , grep Alternate",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Node is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43 - JPMC team to validate it on their end.",
+      "manualFeedbackTemplate": "Node is not running expected Alternate BIOS version at this time. Expected: 5.44, found: 05.43 - JPMC team to validate it on their end.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkBiosGolden",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show",
+          "grep"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 122,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248724-3q7nj7dr",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkBfdTimers",
+      "line": "BFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 has a Tx Timer (2000000)",
+      "context": "BFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 has a Tx Timer (2000000) | different from user given value | BFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 do not have the Echo feature | enabled | BFD session between peers 10.25.72.6 and 10.25.72.7 in VRF VRF_TIER3 do not have the Echo feature | enabled",
+      "messageLines": [
+        "BFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 has a Tx Timer (2000000)",
+        "different from user given value",
+        "BFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 do not have the Echo feature",
+        "enabled",
+        "BFD session between peers 10.25.72.6 and 10.25.72.7 in VRF VRF_TIER3 do not have the Echo feature"
+      ],
+      "descriptionLines": [
+        "Check BFD operational timers",
+        "The check uses the output of the `show bgp neighbors vrf all details` command"
+      ],
+      "commandHint": "show bfd neighbors vrf all details",
+      "deviceResult": "Check: checkBfdTimers\nBFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 has a Tx Timer (2000000)\ndifferent from user given value\nBFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 do not have the Echo feature\nenabled\nBFD session between peers 10.25.72.6 and 10.25.72.7 in VRF VRF_TIER3 do not have the Echo feature\nDescription: Check BFD operational timers | The check uses the output of the `show bgp neighbors vrf all details` command\nCommand: show bfd neighbors vrf all details",
+      "sourceText": "Check: checkBfdTimers\nBFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 has a Tx Timer (2000000)\ndifferent from user given value\nBFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 do not have the Echo feature\nenabled\nBFD session between peers 10.25.72.6 and 10.25.72.7 in VRF VRF_TIER3 do not have the Echo feature\nDescription: Check BFD operational timers | The check uses the output of the `show bgp neighbors vrf all details` command\nCommand: show bfd neighbors vrf all details",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "The BFD sessions between peers have Tx Timer eighter different or invalid - JMPC to validate on their end whether it's expected\nBFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 has a Tx Timer (2000000) different from user given value\nBFD session between peers 10.25.72.4 and 10.25.72.5 in VRF VRF_TIER3 do not have the Echo feature enabled",
+      "manualFeedbackTemplate": "The BFD sessions between peers have Tx Timer eighter different or invalid - JMPC to validate on their end whether it's expected\nBFD session between peers {{ip_addresses}} and {{ip_addresses}} in VRF {{vrfs}} has a Tx Timer (2000000) different from user given value\nBFD session between peers {{ip_addresses}} and {{ip_addresses}} in VRF {{vrfs}} do not have the Echo feature enabled",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkBfdTimers",
+        "interfaces": [],
+        "vrfs": [
+          "VRF_TIER3"
+        ],
+        "neighborIps": [],
+        "ipAddresses": [
+          "10.25.72.4",
+          "10.25.72.5"
+        ],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 242,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248725-mhr6hhci",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkPimNeighbors",
+      "line": "Interface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor",
+      "context": "Interface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/30 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/33 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/29 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/30 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/33 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet1/1.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet1/2.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet2/1.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet2/2.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/10.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/11.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/12.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/13.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/14.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/15.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/16.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet3/17.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/10.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/11.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/12.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/13.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/14.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/15.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/16.300 for vrf VRF_TIER3 does not have any neighbor | Interface Ethernet4/17.300 for vrf VRF_TIER3 does not have any neighbor",
+      "messageLines": [
+        "Interface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/30 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/33 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/29 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/30 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/33 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet1/1.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet1/2.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet2/1.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet2/2.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/10.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/11.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/12.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/13.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/14.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/15.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/16.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet3/17.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/10.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/11.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/12.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/13.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/14.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/15.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/16.300 for vrf VRF_TIER3 does not have any neighbor",
+        "Interface Ethernet4/17.300 for vrf VRF_TIER3 does not have any neighbor"
+      ],
+      "descriptionLines": [
+        "Check that all PIM-enabled interface have at least one neighbor",
+        "The check uses the output of the `show ip pim interface` command"
+      ],
+      "commandHint": "show ip pim interface vrf all | xml",
+      "deviceResult": "Check: checkPimNeighbors\nInterface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/30 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/33 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/29 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/30 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/33 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet1/1.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet1/2.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet2/1.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet2/2.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/10.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/11.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/12.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/13.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/14.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/15.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/16.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/17.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/10.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/11.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/12.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/13.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/14.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/15.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/16.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/17.300 for vrf VRF_TIER3 does not have any neighbor\nDescription: Check that all PIM-enabled interface have at least one neighbor | The check uses the output of the `show ip pim interface` command\nCommand: show ip pim interface vrf all | xml",
+      "sourceText": "Check: checkPimNeighbors\nInterface Ethernet3/29 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/30 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/33 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/29 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/30 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/33 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet1/1.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet1/2.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet2/1.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet2/2.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/10.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/11.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/12.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/13.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/14.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/15.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/16.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet3/17.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/10.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/11.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/12.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/13.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/14.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/15.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/16.300 for vrf VRF_TIER3 does not have any neighbor\nInterface Ethernet4/17.300 for vrf VRF_TIER3 does not have any neighbor\nDescription: Check that all PIM-enabled interface have at least one neighbor | The check uses the output of the `show ip pim interface` command\nCommand: show ip pim interface vrf all | xml",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Below interfaces do not have any neighbor. JPMC team to validate it on their end.\nEthernet3/29-30, Ethernet3/33, Ethernet4/29-30, Ethernet4/33, Ethernet1/1.300, Ethernet1/2.300, Ethernet2/1.300, Ethernet2/2.300, Ethernet3/10.300, Ethernet3/11.300, Ethernet3/12.300, Ethernet3/13.300, Ethernet3/14.300, Ethernet3/15.300, Ethernet3/16.300, Ethernet3/17.300, Ethernet4/10.300, Ethernet4/11.300, Ethernet4/12.300, Ethernet4/13.300, Ethernet4/14.300, Ethernet4/15.300, Ethernet4/16.300, Ethernet4/17.300",
+      "manualFeedbackTemplate": "Below interfaces do not have any neighbor. JPMC team to validate it on their end.\n{{interfaces}}-30, {{interfaces}}, {{interfaces}}-30, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}, {{interfaces}}",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkPimNeighbors",
+        "interfaces": [
+          "Ethernet3/29",
+          "Ethernet3/33",
+          "Ethernet4/29",
+          "Ethernet4/33",
+          "Ethernet1/1.300",
+          "Ethernet1/2.300",
+          "Ethernet2/1.300",
+          "Ethernet2/2.300",
+          "Ethernet3/10.300",
+          "Ethernet3/11.300",
+          "Ethernet3/12.300",
+          "Ethernet3/13.300",
+          "Ethernet3/14.300",
+          "Ethernet3/15.300",
+          "Ethernet3/16.300",
+          "Ethernet3/17.300",
+          "Ethernet4/10.300",
+          "Ethernet4/11.300",
+          "Ethernet4/12.300",
+          "Ethernet4/13.300",
+          "Ethernet4/14.300",
+          "Ethernet4/15.300",
+          "Ethernet4/16.300",
+          "Ethernet4/17.300"
+        ],
+        "vrfs": [
+          "VRF_TIER3",
+          "all"
+        ],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 440,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248725-rvn9xx18",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkIntStatus",
+      "line": "Interface Ethernet3/18 is in NotConnect state",
+      "context": "Interface Ethernet3/18 is in NotConnect state | Interface Ethernet3/19 is in NotConnect state | Interface Ethernet4/18 is in NotConnect state | Interface Ethernet4/19 is in NotConnect state",
+      "messageLines": [
+        "Interface Ethernet3/18 is in NotConnect state",
+        "Interface Ethernet3/19 is in NotConnect state",
+        "Interface Ethernet4/18 is in NotConnect state",
+        "Interface Ethernet4/19 is in NotConnect state"
+      ],
+      "descriptionLines": [
+        "Check if the device interfaces are in err-disabled or bpdugrdErrDis state",
+        "The check uses the output of the `show interface status` command",
+        "Same output for N9K/N7K/N5K"
+      ],
+      "commandHint": "show interface status | xml",
+      "deviceResult": "Check: checkIntStatus\nInterface Ethernet3/18 is in NotConnect state\nInterface Ethernet3/19 is in NotConnect state\nInterface Ethernet4/18 is in NotConnect state\nInterface Ethernet4/19 is in NotConnect state\nDescription: Check if the device interfaces are in err-disabled or bpdugrdErrDis state | The check uses the output of the `show interface status` command | Same output for N9K/N7K/N5K\nCommand: show interface status | xml",
+      "sourceText": "Check: checkIntStatus\nInterface Ethernet3/18 is in NotConnect state\nInterface Ethernet3/19 is in NotConnect state\nInterface Ethernet4/18 is in NotConnect state\nInterface Ethernet4/19 is in NotConnect state\nDescription: Check if the device interfaces are in err-disabled or bpdugrdErrDis state | The check uses the output of the `show interface status` command | Same output for N9K/N7K/N5K\nCommand: show interface status | xml",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Following interfaces are currently in a notConnect state. Kindly check the remote end status and confirm.\nEthernet3/18-19, Ethernet4/18-19",
+      "manualFeedbackTemplate": "Following interfaces are currently in a notConnect state. Kindly check the remote end status and confirm.\n{{interfaces}}-19, {{interfaces}}-19",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkIntStatus",
+        "interfaces": [
+          "Ethernet3/18",
+          "Ethernet4/18"
+        ],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 137,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248726-d53zqthu",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkCoppPolicyMap",
+      "line": "Class Mapp copp-system-p-class-normal has 2042820 violate bytes",
+      "context": "Class Mapp copp-system-p-class-normal has 2042820 violate bytes | Class Mapp copp-system-p-class-exception has 4238776 violate bytes | Class Mapp copp-system-p-class-exception has 3654311 violate bytes | Class Mapp copp-system-p-class-exception has 3792919 violate bytes | Class Mapp copp-system-p-class-exception has 3589678 violate bytes | Class Mapp copp-system-p-class-exception-diag has 17516 violate bytes | Class Mapp copp-system-p-class-exception-diag has 401622096 violate bytes | Class Mapp copp-system-p-class-exception-diag has 363900686 violate bytes | Class Mapp copp-system-p-class-exception-diag has 11836011 violate bytes | Class Mapp copp-system-p-class-monitoring has 335902 violate bytes | Class Mapp copp-system-p-class-undesirable has 5416939498 violate bytes | Class Mapp copp-system-p-class-undesirable has 420475074 violate bytes | Class Mapp copp-system-p-class-undesirable has 89034 violate bytes | Class Mapp class-default has 2625574 violate bytes",
+      "messageLines": [
+        "Class Mapp copp-system-p-class-normal has 2042820 violate bytes",
+        "Class Mapp copp-system-p-class-exception has 4238776 violate bytes",
+        "Class Mapp copp-system-p-class-exception has 3654311 violate bytes",
+        "Class Mapp copp-system-p-class-exception has 3792919 violate bytes",
+        "Class Mapp copp-system-p-class-exception has 3589678 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 17516 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 401622096 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 363900686 violate bytes",
+        "Class Mapp copp-system-p-class-exception-diag has 11836011 violate bytes",
+        "Class Mapp copp-system-p-class-monitoring has 335902 violate bytes",
+        "Class Mapp copp-system-p-class-undesirable has 5416939498 violate bytes",
+        "Class Mapp copp-system-p-class-undesirable has 420475074 violate bytes",
+        "Class Mapp copp-system-p-class-undesirable has 89034 violate bytes",
+        "Class Mapp class-default has 2625574 violate bytes"
+      ],
+      "descriptionLines": [
+        "Check if there are packets labeled as violated or dropped in any of the class-maps",
+        "The check uses the output of the `show policy-map interface control-plane` command"
+      ],
+      "commandHint": "show policy-map interface control-plane,  | xml",
+      "deviceResult": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-normal has 2042820 violate bytes\nClass Mapp copp-system-p-class-exception has 4238776 violate bytes\nClass Mapp copp-system-p-class-exception has 3654311 violate bytes\nClass Mapp copp-system-p-class-exception has 3792919 violate bytes\nClass Mapp copp-system-p-class-exception has 3589678 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 17516 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 401622096 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 363900686 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 11836011 violate bytes\nClass Mapp copp-system-p-class-monitoring has 335902 violate bytes\nClass Mapp copp-system-p-class-undesirable has 5416939498 violate bytes\nClass Mapp copp-system-p-class-undesirable has 420475074 violate bytes\nClass Mapp copp-system-p-class-undesirable has 89034 violate bytes\nClass Mapp class-default has 2625574 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "sourceText": "Check: checkCoppPolicyMap\nClass Mapp copp-system-p-class-normal has 2042820 violate bytes\nClass Mapp copp-system-p-class-exception has 4238776 violate bytes\nClass Mapp copp-system-p-class-exception has 3654311 violate bytes\nClass Mapp copp-system-p-class-exception has 3792919 violate bytes\nClass Mapp copp-system-p-class-exception has 3589678 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 17516 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 401622096 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 363900686 violate bytes\nClass Mapp copp-system-p-class-exception-diag has 11836011 violate bytes\nClass Mapp copp-system-p-class-monitoring has 335902 violate bytes\nClass Mapp copp-system-p-class-undesirable has 5416939498 violate bytes\nClass Mapp copp-system-p-class-undesirable has 420475074 violate bytes\nClass Mapp copp-system-p-class-undesirable has 89034 violate bytes\nClass Mapp class-default has 2625574 violate bytes\nDescription: Check if there are packets labeled as violated or dropped in any of the class-maps | The check uses the output of the `show policy-map interface control-plane` command\nCommand: show policy-map interface control-plane,  | xml",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "Below Copp drop has been observed and it could be historical- JPMC team to check if these are incrementing.\ncopp-system-p-class-normal, copp-system-p-class-exception, copp-system-p-class-monitoring, copp-system-p-class-undesirable and class-default",
+      "manualFeedbackTemplate": "Below {{class_maps}} drop has been observed and it could be historical- JPMC team to check if these are incrementing.\n{{class_maps}}, {{class_maps}}, {{class_maps}}, {{class_maps}} and class-default",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkCoppPolicyMap",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [
+          "Copp",
+          "copp-system-p-class-normal",
+          "copp-system-p-class-exception",
+          "copp-system-p-class-monitoring",
+          "copp-system-p-class-undesirable"
+        ],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "high",
+      "confidenceScore": 171,
+      "mappingMethod": "auto-map"
+    },
+    {
+      "id": "1776323248726-4xrnoi6o",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkLogsFib",
+      "line": "There are multiple log entries regarding FIB events",
+      "context": "There are multiple log entries regarding FIB events",
+      "messageLines": [
+        "There are multiple log entries regarding FIB events"
+      ],
+      "descriptionLines": [
+        "Check if there are any log lines related to FIB events",
+        "The check uses the output of the `show logging logfile` command",
+        "Note: Consistency checker may trigger additional syslog messages. Any 'pass' test messages will",
+        "be excluded from triggering check failure"
+      ],
+      "commandHint": "show logging logfile | grep FIB | grep, -v PASS,show logging nvram | grep FIB | , grep -v PASS",
+      "deviceResult": "Check: checkLogsFib\nThere are multiple log entries regarding FIB events\nDescription: Check if there are any log lines related to FIB events | The check uses the output of the `show logging logfile` command | Note: Consistency checker may trigger additional syslog messages. Any 'pass' test messages will | be excluded from triggering check failure\nCommand: show logging logfile | grep FIB | grep, -v PASS,show logging nvram | grep FIB | , grep -v PASS",
+      "sourceText": "Check: checkLogsFib\nThere are multiple log entries regarding FIB events\nDescription: Check if there are any log lines related to FIB events | The check uses the output of the `show logging logfile` command | Note: Consistency checker may trigger additional syslog messages. Any 'pass' test messages will | be excluded from triggering check failure\nCommand: show logging logfile | grep FIB | grep, -v PASS,show logging nvram | grep FIB | , grep -v PASS",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "There are multiple log entries regarding FIB events. JPMC team to validate it on their end.",
+      "manualFeedbackTemplate": "There are multiple log entries regarding FIB events. JPMC team to validate it on their end.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkLogsFib",
+        "interfaces": [],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show",
+          "logging",
+          "grep"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "low",
+      "confidenceScore": 65,
+      "mappingMethod": "reviewed-auto-map"
+    },
+    {
+      "id": "1776323248726-tlgxvj0l",
+      "type": "check-level-example",
+      "hostname": "D133331R781",
+      "checkName": "checkInterfaceErrors",
+      "line": "Interface Ethernet3/2 has",
+      "context": "Interface Ethernet3/2 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='74084' errors | Interface Ethernet3/20 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10671' errors | Interface Ethernet3/21 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10116' errors | Interface Ethernet3/22 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='7971' errors | Interface Ethernet3/23 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2070' errors | Interface Ethernet3/24 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10766' errors | Interface Ethernet3/25 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='47646' errors | Interface Ethernet3/26 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4478' errors | Interface Ethernet3/27 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='5090' errors | Interface Ethernet3/32 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='77213' errors | Interface Ethernet4/2 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='100257' errors | Interface Ethernet4/20 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2975' errors | Interface Ethernet4/21 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3216' errors | Interface Ethernet4/22 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3740' errors | Interface Ethernet4/23 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='1796' errors | Interface Ethernet4/24 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='8245' errors | Interface Ethernet4/26 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4531' errors | Interface Ethernet4/27 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='28836' errors | Interface Ethernet4/32 has | align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='48374' errors",
+      "messageLines": [
+        "Interface Ethernet3/2 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='74084' errors",
+        "Interface Ethernet3/20 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10671' errors",
+        "Interface Ethernet3/21 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10116' errors",
+        "Interface Ethernet3/22 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='7971' errors",
+        "Interface Ethernet3/23 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2070' errors",
+        "Interface Ethernet3/24 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10766' errors",
+        "Interface Ethernet3/25 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='47646' errors",
+        "Interface Ethernet3/26 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4478' errors",
+        "Interface Ethernet3/27 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='5090' errors",
+        "Interface Ethernet3/32 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='77213' errors",
+        "Interface Ethernet4/2 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='100257' errors",
+        "Interface Ethernet4/20 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2975' errors",
+        "Interface Ethernet4/21 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3216' errors",
+        "Interface Ethernet4/22 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3740' errors",
+        "Interface Ethernet4/23 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='1796' errors",
+        "Interface Ethernet4/24 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='8245' errors",
+        "Interface Ethernet4/26 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4531' errors",
+        "Interface Ethernet4/27 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='28836' errors",
+        "Interface Ethernet4/32 has",
+        "align_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='48374' errors"
+      ],
+      "descriptionLines": [
+        "Check if the device interfaces have any kind of",
+        "error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc)",
+        "The check uses the output of the `show interface counters errors` command",
+        "Same output for N9K/N7K/N5K"
+      ],
+      "commandHint": "show interface counters errors | xml",
+      "deviceResult": "Check: checkInterfaceErrors\nInterface Ethernet3/2 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='74084' errors\nInterface Ethernet3/20 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10671' errors\nInterface Ethernet3/21 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10116' errors\nInterface Ethernet3/22 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='7971' errors\nInterface Ethernet3/23 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2070' errors\nInterface Ethernet3/24 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10766' errors\nInterface Ethernet3/25 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='47646' errors\nInterface Ethernet3/26 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4478' errors\nInterface Ethernet3/27 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='5090' errors\nInterface Ethernet3/32 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='77213' errors\nInterface Ethernet4/2 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='100257' errors\nInterface Ethernet4/20 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2975' errors\nInterface Ethernet4/21 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3216' errors\nInterface Ethernet4/22 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3740' errors\nInterface Ethernet4/23 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='1796' errors\nInterface Ethernet4/24 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='8245' errors\nInterface Ethernet4/26 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4531' errors\nInterface Ethernet4/27 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='28836' errors\nInterface Ethernet4/32 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='48374' errors\nDescription: Check if the device interfaces have any kind of | error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc) | The check uses the output of the `show interface counters errors` command | Same output for N9K/N7K/N5K\nCommand: show interface counters errors | xml",
+      "sourceText": "Check: checkInterfaceErrors\nInterface Ethernet3/2 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='74084' errors\nInterface Ethernet3/20 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10671' errors\nInterface Ethernet3/21 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10116' errors\nInterface Ethernet3/22 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='7971' errors\nInterface Ethernet3/23 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2070' errors\nInterface Ethernet3/24 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='10766' errors\nInterface Ethernet3/25 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='47646' errors\nInterface Ethernet3/26 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4478' errors\nInterface Ethernet3/27 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='5090' errors\nInterface Ethernet3/32 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='77213' errors\nInterface Ethernet4/2 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='100257' errors\nInterface Ethernet4/20 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='2975' errors\nInterface Ethernet4/21 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3216' errors\nInterface Ethernet4/22 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='3740' errors\nInterface Ethernet4/23 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='1796' errors\nInterface Ethernet4/24 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='8245' errors\nInterface Ethernet4/26 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='4531' errors\nInterface Ethernet4/27 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='28836' errors\nInterface Ethernet4/32 has\nalign_err='0'/fcs_err='0'/xmit_err='0'/rcv_err='0'/undersize='0'/out_disc='48374' errors\nDescription: Check if the device interfaces have any kind of | error(eth_align_err/eth_fcs_err/eth_xmit_err/eth_rcv_err/eth_undersize/eth_outdisc) | The check uses the output of the `show interface counters errors` command | Same output for N9K/N7K/N5K\nCommand: show interface counters errors | xml",
+      "deviceResultName": "f5080b_D133331R781_final_report.txt",
+      "manualFeedback": "There are non-zero out_disc/fcs_err/xmit_err/rcv_err on below interfaces on the switch -JPMC team to check whether these counters are incrementing.",
+      "manualFeedbackTemplate": "There are non-zero out_disc/fcs_err/xmit_err/rcv_err on below interfaces on the switch -JPMC team to check whether these counters are incrementing.",
+      "manualFeedbackVariables": {
+        "schemaVersion": 1,
+        "hostname": "D133331R781",
+        "checkName": "checkInterfaceErrors",
+        "interfaces": [
+          "Ethernet3/2",
+          "Ethernet3/20",
+          "Ethernet3/21",
+          "Ethernet3/22",
+          "Ethernet3/23",
+          "Ethernet3/24",
+          "Ethernet3/25",
+          "Ethernet3/26",
+          "Ethernet3/27",
+          "Ethernet3/32",
+          "Ethernet4/2",
+          "Ethernet4/20",
+          "Ethernet4/21",
+          "Ethernet4/22",
+          "Ethernet4/23",
+          "Ethernet4/24",
+          "Ethernet4/26",
+          "Ethernet4/27",
+          "Ethernet4/32"
+        ],
+        "vrfs": [],
+        "neighborIps": [],
+        "ipAddresses": [],
+        "moduleIds": [],
+        "classMaps": [],
+        "bugIds": [],
+        "commandTokens": [
+          "show"
+        ],
+        "utilization": ""
+      },
+      "manualFeedbackName": "pasted-manual-feedback.txt",
+      "confidenceLabel": "low",
+      "confidenceScore": 69,
       "mappingMethod": "reviewed-auto-map"
     }
   ]
