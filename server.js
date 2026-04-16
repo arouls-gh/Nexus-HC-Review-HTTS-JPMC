@@ -462,22 +462,7 @@ function normalizeArchiveRelativePath(value) {
 }
 
 function isFinalReportPath(value) {
-  return (
-    /(?:^|[\\/])RESULTS[\\/].+_final_report\.(txt|json)$/i.test(String(value || "")) ||
-    isDirectFinalReportPath(value)
-  );
-}
-
-function isDirectFinalReportPath(value) {
-  const normalized = String(value || "").replace(/\\/g, "/").replace(/^\/+/, "");
-  const segments = normalized.split("/").filter(Boolean);
-
-  return (
-    segments.length === 2 &&
-    /_final_report\.(txt|json)$/i.test(segments[1]) &&
-    !/^RESULTS$/i.test(segments[0]) &&
-    !/^LOGS$/i.test(segments[0])
-  );
+  return /(?:^|[\\/])RESULTS[\\/].+_final_report\.(txt|json)$/i.test(String(value || ""));
 }
 
 function buildGeneratedFeedbackKey(example) {

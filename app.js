@@ -226,18 +226,10 @@ analyzeButton.addEventListener("click", async () => {
     const deviceFolder = buildDeviceFolder(uploadedEntries);
 
     if (!deviceFolder) {
-      setAnalysisStatus(
-        "Folder detected, but no valid _final_report file was found in either RESULTS or the selected folder.",
-      );
+      setAnalysisStatus("Folder detected, but no valid RESULTS final report file was found.");
       window.alert(
-        "The selected folder does not include a valid _final_report file in RESULTS or directly inside the selected folder.",
+        "The selected folder does not include a valid RESULTS final report file.",
       );
-      return;
-    }
-
-    if (deviceFolder.reportSelectionError) {
-      setAnalysisStatus(deviceFolder.reportSelectionError);
-      window.alert(deviceFolder.reportSelectionError);
       return;
     }
 
@@ -452,66 +444,31 @@ async function saveGeneratedFeedbackExamples(examples) {
 }
 
 function buildDeviceFolder(uploadedEntries) {
-  const nestedResultsFiles = uploadedEntries.filter((entry) =>
+  const resultsFiles = uploadedEntries.filter((entry) =>
     /\/RESULTS\/.+_final_report\.(txt|json)$/i.test(entry.relativePath),
-  );
-  const directReportFiles = uploadedEntries.filter((entry) =>
-    isDirectFinalReportPath(entry.relativePath),
   );
   const logFiles = uploadedEntries.filter((entry) =>
     /\/LOGS\/.+\.(xml|txt)$/i.test(entry.relativePath),
   );
-  const resultsFiles = nestedResultsFiles.length ? nestedResultsFiles : directReportFiles;
 
   if (!resultsFiles.length) {
     return null;
   }
 
-  if (resultsFiles.length > 1) {
-    return {
-      reportSelectionError:
-        "Multiple _final_report files were found in the selected folder. Please upload a folder containing only one final report file.",
-    };
-  }
-
   const parentFolderName =
     uploadedEntries[0]?.relativePath.split("/")[0] || "Unknown device";
-  const selectedReport = resultsFiles[0] || null;
   const txtReport =
     resultsFiles.find((entry) => /_final_report\.txt$/i.test(entry.name)) ?? null;
   const jsonReport =
     resultsFiles.find((entry) => /_final_report\.json$/i.test(entry.name)) ?? null;
-  const derivedHostname =
-    extractHostname(selectedReport?.content || "") ||
-    parentFolderName ||
-    extractHostnameFromReportName(selectedReport?.name || "");
 
   return {
-    hostname: derivedHostname,
+    hostname: parentFolderName,
     resultsFiles,
     logFiles,
     txtReport,
     jsonReport,
-    reportSelectionError: "",
   };
-}
-
-function isDirectFinalReportPath(relativePath) {
-  const normalizedPath = String(relativePath || "").replace(/\\/g, "/");
-  const segments = normalizedPath.split("/").filter(Boolean);
-
-  return (
-    segments.length === 2 &&
-    /_final_report\.(txt|json)$/i.test(segments[1]) &&
-    !/^RESULTS$/i.test(segments[0]) &&
-    !/^LOGS$/i.test(segments[0])
-  );
-}
-
-function extractHostnameFromReportName(fileName) {
-  const normalizedName = String(fileName || "").trim();
-  const match = normalizedName.match(/^[^_]+_(.+?)_final_report\.(?:txt|json)$/i);
-  return match ? match[1] : normalizedName.replace(/_final_report\.(?:txt|json)$/i, "");
 }
 
 function setAnalysisStatus(message) {
