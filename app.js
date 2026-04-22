@@ -1839,14 +1839,9 @@ function summarizeCdpMessages(messages) {
 }
 
 function summarizeArpMessages(messages) {
-  return summarizeMatchedMessages(messages, [
-    /\bARP\b/i,
-    /\bincomplete\b/i,
-    /\bthrottled\b/i,
-    /\bunknown\b/i,
-    /\bVRF\b/i,
-    /\bIP\b/i,
-  ]);
+  return dedupe(messages)
+    .filter((message) => String(message || "").trim())
+    .join("\n");
 }
 
 function summarizeSyslogMessages(messages) {
